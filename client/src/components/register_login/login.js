@@ -1,20 +1,23 @@
 import React, { Component } from "react";
+import Formfield from "../utils/Form/formfield";
+import { update, generateData, isFormValid } from "../utils/Form/formActions";
+import { withRouter } from "react-router-dom";
+
 import { connect } from "react-redux";
-import Formfield from '../utils/Form/formfield';
+import { loginUser } from "../../actions/user_actions";
 
 class Login extends Component {
-
   state = {
     formError: false,
-    formSuccess:'',
+    formSuccess: "",
     formData: {
       email: {
-        element: 'input',
-        value:'',
+        element: "input",
+        value: "",
         config: {
-          name: 'email_input',
-          type: 'email',
-          placeholder:'Ingrese su email'
+          name: "email_input",
+          type: "email",
+          placeholder: "Ingrese su email"
         },
         validation: {
           required: true,
@@ -22,47 +25,82 @@ class Login extends Component {
         },
         valid: false,
         touched: false,
-        validationMessage: ''
+        validationMessage: ""
       },
       password: {
-        element: 'input',
-        value:'',
+        element: "input",
+        value: "",
         config: {
-          name: 'password_input',
-          type: 'password',
-          placeholder:'Ingrese su password'
+          name: "password_input",
+          type: "password",
+          placeholder: "Ingrese su password"
         },
         validation: {
-          required: true,
+          required: true
         },
         valid: false,
         touched: false,
-        validationMessage: ''
-      },
+        validationMessage: ""
+      }
     }
-  }
+  };
 
-  updateForm = ()=>{
-
-  }
+  updateForm = element => {
+    const newFormData = update(element, this.state.formData, "login");
+    this.setState({
+      formError: false,
+      formData: newFormData
+    });
+  };
 
   submitForm = event => {
+    event.preventDefault();
 
+    let dataToSubmit = generateData(this.state.formData, "login");
+    let formIsValid = isFormValid(this.state.formData, "login");
+
+    if (formIsValid) {
+      this.props.dispatch(loginUser(dataToSubmit)).then(response => {
+        if (response.payload.loginSuccess) {
+          console.log(response.payload);
+          this.props.history.push("/user/dashboard");
+        } else {
+          this.setState({
+            formError: true
+          });
+        }
+      });
+    } else {
+      this.setState({ formError: true });
+    }
   };
 
   render() {
     return (
       <div className="signin_wrapper">
         <form onSubmit={e => this.submitForm(e)}>
-          <Formfield 
-            id={'email'}
+          <Formfield
+            id={"email"}
             formdata={this.state.formData.email}
             change={element => this.updateForm(element)}
           />
+          <Formfield
+            id={"password"}
+            formdata={this.state.formData.password}
+            change={element => this.updateForm(element)}
+          />
+
+          {this.state.formError ? (
+            <div className="error_label">
+              Por favor revisar la informacion ingresada
+            </div>
+          ) : null}
+
+          <button onClick={e => this.submitForm(e)}>LOG IN</button>
         </form>
       </div>
     );
   }
 }
 
-export default connect()(Login);
+export default connect()(withRouter(Login));

@@ -74,29 +74,27 @@ app.get("/api/product/woods", (req, res) => {
 //-----PRODUCTS------------------
 //-------------------------------
 
-
-//BY ARRIVAL   
+//BY ARRIVAL
 //articles?sortBy=createdAt&order=desc&limit=4
 
 //BY SELL
 //articles?sortBy=sold&desc&limit=4
 
-app.get('/api/product/articles', (req, res)=>{
-  let order = req.query.order ? req.query.order :'asc';
-  let sortBy = req.query.sortBy ? req.query.sortBy :'_id';
+app.get("/api/product/articles", (req, res) => {
+  let order = req.query.order ? req.query.order : "asc";
+  let sortBy = req.query.sortBy ? req.query.sortBy : "_id";
   let limit = req.query.limit ? parseInt(req.query.limit) : 100;
-  
-  Product
-    .find()
-    .populate('brand')
-    .populate('wood')
+
+  Product.find()
+    .populate("brand")
+    .populate("wood")
     .sort([[sortBy, order]])
     .limit(limit)
-    .exec((err, docs)=>{
-      if(err) return res.status(400).send(err)
-      return res.status(200).send(docs)
-    })
-})
+    .exec((err, docs) => {
+      if (err) return res.status(400).send(err);
+      return res.status(200).send(docs);
+    });
+});
 
 //BY ID
 //article?id=sdfsfs,sdfsdf,fghfgh&type=array
@@ -114,14 +112,13 @@ app.get("/api/product/articles_by_id", (req, res) => {
     });
   }
 
-  Product
-    .find({ _id: { $in: items } })
-    .populate('brand')
-    .populate('wood')
-    .exec((err, docs)=>{
-      if(err) return res.status(400).send(err)
-      return res.status(200).send(docs)
-    })
+  Product.find({ _id: { $in: items } })
+    .populate("brand")
+    .populate("wood")
+    .exec((err, docs) => {
+      if (err) return res.status(400).send(err);
+      return res.status(200).send(docs);
+    });
 });
 
 app.post("/api/product/article", auth, admin, (req, res) => {
@@ -179,7 +176,10 @@ app.post("/api/users/login", (req, res) => {
       });
     user.comparePassword(req.body.password, (err, isMatch) => {
       if (!isMatch)
-        return res.json({ loginSuccess: false, message: "Wrong password" });
+        return res.json({
+          loginSuccess: false,
+          message: "Wrong password"
+        });
 
       user.generateToken((err, user) => {
         if (err) return res.status(400).send(err);
