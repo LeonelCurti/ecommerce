@@ -1,7 +1,7 @@
 import React from "react";
 
 const Formfield = ({ formdata, change, id }) => {
-
+  
 
   const showError = () =>{
     let errorMsg = null;
@@ -25,10 +25,11 @@ const Formfield = ({ formdata, change, id }) => {
         formTemplate = (
           <div className="formBlock">
             <input
-              {...formdata.config}
+              {...formdata.config}              
               value={formdata.value}
               onBlur={event => change({ event, id, blur: true })}
               onChange={event => change({ event, id })}
+              
             />
             {showError()}
           </div>

@@ -10,7 +10,9 @@ export const generateData = (formData, formName) => {
   let dataToSubmit = {};
 
   for (let key in formData) {
-    dataToSubmit[key] = formData[key].value;
+    if (key !== 'confirmPassword') {
+      dataToSubmit[key] = formData[key].value;      
+    }
   }
   return dataToSubmit;
 };
@@ -21,6 +23,12 @@ export const validate = (element, formData = []) => {
   if (element.validation.email) {
     const valid = /\S+@\S+\.\S+/.test(element.value);
     const msg = `${!valid ? "El email debe ser valido" : ""}`;
+    error = !valid ? [valid, msg] : error;
+  }
+
+  if (element.validation.confirm) {
+    const valid = element.value.trim() === formData[element.validation.confirm].value;
+    const msg = `${!valid ? "Las contraseñas no coinciden" : ""}`;
     error = !valid ? [valid, msg] : error;
   }
 

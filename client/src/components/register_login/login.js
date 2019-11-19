@@ -62,7 +62,6 @@ class Login extends Component {
     if (formIsValid) {
       this.props.dispatch(loginUser(dataToSubmit)).then(response => {
         if (response.payload.loginSuccess) {
-          console.log(response.payload);
           this.props.history.push("/user/dashboard");
         } else {
           this.setState({
@@ -78,7 +77,7 @@ class Login extends Component {
   render() {
     return (
       <div className="signin_wrapper">
-        <form onSubmit={e => this.submitForm(e)}>
+        <form onSubmit={this.submitForm}>
           <Formfield
             id={"email"}
             formdata={this.state.formData.email}
@@ -87,7 +86,7 @@ class Login extends Component {
           <Formfield
             id={"password"}
             formdata={this.state.formData.password}
-            change={element => this.updateForm(element)}
+            change={element => this.updateForm(element)} 
           />
 
           {this.state.formError ? (
@@ -96,7 +95,7 @@ class Login extends Component {
             </div>
           ) : null}
 
-          <button onClick={e => this.submitForm(e)}>LOG IN</button>
+          <button onClick={this.submitForm}>LOG IN</button>
         </form>
       </div>
     );

@@ -2,7 +2,7 @@ import React from "react";
 import Mybutton from "../utils/button";
 import Login from "./login";
 
-export const RegisterLogin = (props) => {
+const RegisterLogin = (props) => {
   return (
     <div className="page_wrapper">
       <div className="container">
@@ -29,3 +29,5 @@ export const RegisterLogin = (props) => {
     </div>
   );
 };
+
+export default RegisterLogin;
