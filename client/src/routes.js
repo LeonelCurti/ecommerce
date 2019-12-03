@@ -1,11 +1,15 @@
 import React from "react";
 import { Switch, Route } from "react-router-dom";
-import Home from "./components/Home";
+
 import Layout from "./hoc/layout";
-import  RegisterLogin from "./components/register_login";
-import  Register from "./components/register_login/register";
-import  UserDashboard from "./components/User/index";
 import Auth from './hoc/auth.js'
+
+import Home from "./components/Home";
+import RegisterLogin from "./components/register_login";
+import Register from "./components/register_login/register";
+import Shop from './components/Shop'
+
+import UserDashboard from "./components/User/index";
 
 const Routes = () => {
   return (
@@ -15,6 +19,7 @@ const Routes = () => {
 
         <Route path="/register" exact component={Auth(Register,false)} />
         <Route path="/register_login" exact component={Auth(RegisterLogin,false)} />
+        <Route path="/shop" exact component={Auth(Shop,null)} />
         <Route path="/" exact component={Auth(Home,null)} />
       </Switch>
     </Layout>

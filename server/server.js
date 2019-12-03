@@ -78,7 +78,7 @@ app.get("/api/product/woods", (req, res) => {
 //articles?sortBy=createdAt&order=desc&limit=4
 
 //BY SELL
-//articles?sortBy=sold&desc&limit=4
+//articles?sortBy=sold&order=desc&limit=4
 
 app.get("/api/product/articles", (req, res) => {
   let order = req.query.order ? req.query.order : "asc";

@@ -10,6 +10,7 @@ export default function(ComposedClass, reload, adminRoute = null) {
     state = {
       loading: true
     };
+    
 
     componentDidMount() {
       this._isMounted = true;
@@ -24,7 +25,7 @@ export default function(ComposedClass, reload, adminRoute = null) {
           if (adminRoute && !user.isAdmin) {
             this.props.history.push("/user/dashboard");
           } else {
-            if (!reload) this.props.history.push("/user/dashboard");
+            if (reload === false) this.props.history.push("/user/dashboard");
           }
         }        
         if (this._isMounted) {

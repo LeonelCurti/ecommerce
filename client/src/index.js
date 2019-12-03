@@ -4,6 +4,7 @@ import "./Resources/css/styles.css";
 
 import { BrowserRouter } from "react-router-dom";
 import Routes from "./routes";
+import ScrollToTop from "./components/utils/ScrollToTop";
 
 import { Provider } from "react-redux";
 import { createStore, applyMiddleware } from "redux";
@@ -21,6 +22,7 @@ ReactDOM.render(
   <Provider 
     store={store}>
     <BrowserRouter>
+      <ScrollToTop />
       <Routes />
     </BrowserRouter>
   </Provider>
