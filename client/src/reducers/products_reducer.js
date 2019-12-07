@@ -1,9 +1,11 @@
-import { 
-  GET_PRODUCTS_BY_ARRIVAL, 
+import {
+  GET_PRODUCTS_BY_ARRIVAL,
   GET_PRODUCTS_BY_SELL,
   GET_BRANDS,
   GET_WOODS,
-  GET_PRODUCTS_TO_SHOP
+  GET_PRODUCTS_TO_SHOP,
+  ADD_PRODUCT,
+  CLEAR_PRODUCT
 } from "../actions/types";
 const INITIAL_STATE = {};
 
@@ -16,13 +18,17 @@ const productsReducer = (state = INITIAL_STATE, action) => {
     case GET_BRANDS:
       return { ...state, brands: action.payload };
     case GET_WOODS:
-      return { ...state, woods: action.payload };    
+      return { ...state, woods: action.payload };
     case GET_PRODUCTS_TO_SHOP:
-      return { 
+      return {
         ...state,
         toShop: action.payload.articles,
         toShopSize: action.payload.size
-      };    
+      };
+    case ADD_PRODUCT:
+      return { ...state, addProduct: action.payload };
+    case CLEAR_PRODUCT:
+      return { ...state, addProduct: action.payload };
     default:
       return state;
   }
