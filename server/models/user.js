@@ -45,10 +45,12 @@ const userSchema = mongoose.Schema({
   }
 });
 
-//antes de hacer algo, en este caso save, ejecuta este callback
+/**
+ * This is the middleware, It will be called before saving any record
+ */
 userSchema.pre("save", function(next) {
   var user = this;
-
+  // only hash the password if it has been modified (or is new)
   if (user.isModified("password")) {
     bcrypt.genSalt(SALT_I, (err, salt) => {
       if (err) return next(err);

@@ -107,6 +107,7 @@ input {
 }
 
 button {
+  border: none;
     cursor: pointer;
     text-transform: uppercase;
     padding: 10px;

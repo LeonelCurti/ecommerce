@@ -5,7 +5,9 @@ import {
   GET_WOODS,
   GET_PRODUCTS_TO_SHOP,
   ADD_PRODUCT,
-  CLEAR_PRODUCT
+  CLEAR_PRODUCT,
+  ADD_BRAND,
+  ADD_WOOD
 } from "../actions/types";
 const INITIAL_STATE = {};
 
@@ -29,6 +31,16 @@ const productsReducer = (state = INITIAL_STATE, action) => {
       return { ...state, addProduct: action.payload };
     case CLEAR_PRODUCT:
       return { ...state, addProduct: action.payload };
+    case ADD_BRAND:
+      return { ...state, 
+        addBrand: action.payload.success,
+        brands: action.payload.brands 
+      };
+    case ADD_WOOD:
+      return { ...state, 
+        addWood: action.payload.success,
+        woods: action.payload.woods 
+      };
     default:
       return state;
   }
