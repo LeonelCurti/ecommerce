@@ -1,7 +1,14 @@
 const { User } = require("../models/user");
 
+
+//check if user client has a cookie
+//and compare with the one in DB
+
 let auth = (req, res, next) => {
+
+  //retrieve client cookie
   let token = req.cookies.w_auth;
+  
   User.findByToken(token, (err, user) => {
     if(err) throw err;
     if(!user) return res.json({

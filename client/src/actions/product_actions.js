@@ -9,11 +9,33 @@ import {
   CLEAR_PRODUCT,
   ADD_BRAND,
   ADD_WOOD,
+  GET_PRODUCT_DETAIL,
+  //to clear global redux state
+  //prevent flashing the older state in screen
+  CLEAR_PRODUCT_DETAIL,
 } from "./types";
 import { PRODUCT_SERVER } from "../components/utils/misc";
 
 
 //PRODUCTS
+
+export function getProductDetail(id){
+  const request = axios.get(`${PRODUCT_SERVER}/articles_by_id?id=${id}&type=single`)
+  .then(response=>{
+    return response.data[0]
+  })
+  return {
+    type: GET_PRODUCT_DETAIL,
+    payload: request
+  }
+}
+
+export function clearProductDetail(){
+  return {
+    type:CLEAR_PRODUCT_DETAIL,
+    payload:''
+  }
+}
 
 export function addProduct(dataToSubmit){
   const request = axios

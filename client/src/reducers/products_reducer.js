@@ -7,7 +7,11 @@ import {
   ADD_PRODUCT,
   CLEAR_PRODUCT,
   ADD_BRAND,
-  ADD_WOOD
+  ADD_WOOD,
+  GET_PRODUCT_DETAIL,
+  //to clear global redux state
+  //prevent flashing the older state in screen
+  CLEAR_PRODUCT_DETAIL,
 } from "../actions/types";
 const INITIAL_STATE = {};
 
@@ -32,14 +36,26 @@ const productsReducer = (state = INITIAL_STATE, action) => {
     case CLEAR_PRODUCT:
       return { ...state, addProduct: action.payload };
     case ADD_BRAND:
-      return { ...state, 
+      return { 
+        ...state, 
         addBrand: action.payload.success,
         brands: action.payload.brands 
       };
     case ADD_WOOD:
-      return { ...state, 
+      return { 
+        ...state, 
         addWood: action.payload.success,
         woods: action.payload.woods 
+      };
+    case GET_PRODUCT_DETAIL:
+      return { 
+        ...state, 
+        prodDetail: action.payload
+      };
+    case CLEAR_PRODUCT_DETAIL:
+      return { 
+        ...state, 
+        prodDetail: action.payload
       };
     default:
       return state;
