@@ -14,6 +14,8 @@ import UserDashboard from "./components/User/index";
 import AddProducts from "./components/User/Admin/add_products";
 import ManageCategories from './components/User/Admin/manage_categories'
 
+import NotFound from './components/utils/not_found'
+
 const Routes = () => {
   return (
     <Layout>
@@ -28,6 +30,7 @@ const Routes = () => {
         <Route path="/product_detail/:id" exact component={Auth(ProductPage,null)} />
         <Route path="/shop" exact component={Auth(Shop,null)} />
         <Route path="/" exact component={Auth(Home,null)} />
+        <Route component={NotFound} />
       </Switch>
     </Layout>
   );

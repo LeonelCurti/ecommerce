@@ -3,9 +3,22 @@ import {
   LOGIN_USER, 
   REGISTER_USER, 
   AUTH_USER,
-  LOGOUT_USER 
+  LOGOUT_USER,
+  ADD_TO_CART_USER 
 } from "./types";
 import { USER_SERVER } from "../components/utils/misc";
+
+export function addToCart(_id){
+
+  const request = axios.post(`${USER_SERVER}/addToCart?productId=${_id}`)
+  .then( response => response.data)
+
+  return {
+    type: ADD_TO_CART_USER,
+    payload: request
+  }
+}
+
 
 export function loginUser(dataToSubmit) {
   const request = axios

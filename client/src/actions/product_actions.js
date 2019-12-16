@@ -21,9 +21,12 @@ import { PRODUCT_SERVER } from "../components/utils/misc";
 
 export function getProductDetail(id){
   const request = axios.get(`${PRODUCT_SERVER}/articles_by_id?id=${id}&type=single`)
-  .then(response=>{
+  .then(response=>{    
     return response.data[0]
   })
+  .catch(err =>{
+    return ''
+  })  
   return {
     type: GET_PRODUCT_DETAIL,
     payload: request

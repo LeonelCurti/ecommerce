@@ -1,19 +1,26 @@
 import React, { Component } from "react";
 import PageTop from "../utils/page_top";
-
+import CircularProgress from "@material-ui/core/CircularProgress";
 import { connect } from "react-redux";
-import {
-  getProductDetail,
-  clearProductDetail
-} from "../../actions/product_actions";
+import { getProductDetail, clearProductDetail } from "../../actions/product_actions";
+
+import { addToCart } from '../../actions/user_actions'
 
 import ProdNfo from "./prodNfo";
 import ProdImg from "./prod_img";
 
-class ProductPage extends Component {
-  componentDidMount() {
-    const id = this.props.match.params.id;
-    this.props.dispatch(getProductDetail(id));
+class ProductPage extends Component {  
+
+  componentDidMount() {   
+    
+    const id = this.props.match.params.id; 
+    this.props.dispatch(getProductDetail(id))
+    .then(response =>{      
+      if(response.payload==='')
+        this.props.history.push('/')
+    })
+    
+       
   }
 
   componentWillUnmount() {
@@ -21,27 +28,31 @@ class ProductPage extends Component {
   }
 
   modifiedImageToPass = images => {
-    
+      
     let lightboxImages = [];
     images.forEach(item => {
       lightboxImages.push(item.url);
-    });
-    
-  
+    });  
     return lightboxImages;
   };
 
-  render() {
+  addToCartHandler = (id) =>{
+    this.props.dispatch(addToCart(id))    
+  }
+
+  render() {     
+    
+    
     return (
       <div>
         <PageTop title="Product detail" />
         <div className="container">
           {this.props.products.prodDetail ? (
-            <div className="product_detail_wrapper">
+            <div className="product_detail_wrapper">          
               <div className="left">
                 <div style={{ width: "500px" }}>
                   <ProdImg
-                    images={this.modifiedImageToPass(
+                  images={this.modifiedImageToPass(
                       this.props.products.prodDetail.images
                     )}
                   />                  
@@ -55,7 +66,13 @@ class ProductPage extends Component {
               </div>
             </div>
           ) : (
-            "Loading"
+            <div style={{textAlign:'center',paddingTop:'10px'}}>
+              <CircularProgress 
+                style={{color:'#00bcd4'}}
+                thikness={7}
+              />
+
+            </div>
           )}
         </div>
       </div>
