@@ -13,6 +13,7 @@ import ProductPage from './components/Product'
 import UserDashboard from "./components/User/index";
 import AddProducts from "./components/User/Admin/add_products";
 import ManageCategories from './components/User/Admin/manage_categories'
+import Cart from './components/User/cart'
 
 import NotFound from './components/utils/not_found'
 
@@ -20,13 +21,15 @@ const Routes = () => {
   return (
     <Layout>
       <Switch>
+      {/* PRIVATE ROUTES */}
         <Route path="/user/dashboard" exact component={Auth(UserDashboard,true)} />
+        <Route path="/user/cart" exact component={Auth(Cart,true)} />
         <Route path="/admin/add_product" exact component={Auth(AddProducts,true)} />
         <Route path="/admin/manage_categories" exact component={Auth(ManageCategories,true)} />
-
+      {/* SEMI PRIVATE ROUTES */}
         <Route path="/register" exact component={Auth(Register,false)} />
         <Route path="/register_login" exact component={Auth(RegisterLogin,false)} />
-        
+      {/* PUBLIC ROUTES */}
         <Route path="/product_detail/:id" exact component={Auth(ProductPage,null)} />
         <Route path="/shop" exact component={Auth(Shop,null)} />
         <Route path="/" exact component={Auth(Home,null)} />

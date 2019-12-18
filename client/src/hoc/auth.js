@@ -18,10 +18,10 @@ export default function(ComposedClass, reload, adminRoute = null) {
         let user = this.props.user.userData;
 
         if (!user.isAuth) {
-          //user is NOT authenticated
+          //user NOT authenticated
           if (reload) this.props.history.push("/register_login");
         } else {
-          //user is authenticated
+          //user authenticated
           if (adminRoute && !user.isAdmin) {
             this.props.history.push("/user/dashboard");
           } else {

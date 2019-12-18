@@ -154,7 +154,7 @@ app.get("/api/product/articles", (req, res) => {
 app.get("/api/product/articles_by_id", (req, res) => {
   let type = req.query.type;
   let items = req.query.id;
-
+  
   if (type === "array") {
     let ids = items.split(",");
     items = [];
@@ -162,6 +162,7 @@ app.get("/api/product/articles_by_id", (req, res) => {
       return mongoose.Types.ObjectId(item);
     });
   }
+ 
 
   Product.find({ _id: { $in: items } })
     .populate("brand")
@@ -285,7 +286,10 @@ app.get(
   }
 )
 
-//ADD TO CART ENDPOINT
+//-------------------------------
+//-----CART ENDPOINTS------------
+//-------------------------------
+
 
 app.post('/api/users/addToCart', auth, (req, res)=>{
   
@@ -334,7 +338,36 @@ app.post('/api/users/addToCart', auth, (req, res)=>{
       )
     }
   })
+})
 
+app.get('/api/users/removeFromCart', auth, (req, res)=> {
+  User.findOneAndUpdate(
+    { _id: req.user._id},
+    {"$pull": 
+      { "cart":
+        { "id": mongoose.Types.ObjectId(req.query._id) }
+      }
+    },
+    {new: true},
+    (err,doc)=>{
+      let cart = doc.cart;
+      let array = cart.map(item=>{
+        return mongoose.Types.ObjectId(item.id)
+      });     
+      
+
+      Product
+       .find({'_id':{$in: array}})
+       .populate('brand')
+       .populate('wood')
+       .exec((err,cartDetail)=>{
+         return res.status(200).json({
+           cartDetail,
+           cart
+         })
+       })
+    }
+  )
 })
 
 const port = process.env.PORT || 3002;
