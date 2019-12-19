@@ -5,7 +5,9 @@ import {
   LOGOUT_USER,
   ADD_TO_CART_USER,
   GET_CART_ITEMS_USER,
-  REMOVE_CART_ITEM_USER
+  REMOVE_CART_ITEM_USER,
+  UPDATE_DATA_USER,
+  CLEAR_UPDATE_USER_DATA
 } from "../actions/types";
 
 const INITIAL_STATE = {};
@@ -41,6 +43,16 @@ const userReducer = (state = INITIAL_STATE, action) => {
           ...state.userData,
           cart: action.payload.cart
         }
+      }
+    case UPDATE_DATA_USER:
+      return {
+        ...state,
+        updateUser: action.payload,        
+      }
+    case CLEAR_UPDATE_USER_DATA:
+      return {
+        ...state,
+        updateUser: action.payload
       }
     default:
       return state;

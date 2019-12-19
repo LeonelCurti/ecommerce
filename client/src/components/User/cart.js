@@ -3,7 +3,7 @@ import UserLayout from '../../hoc/user'
 
 import {connect} from 'react-redux'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFrown, faSmile } from "@fortawesome/free-solid-svg-icons";
+import { faFrown } from "@fortawesome/free-solid-svg-icons";
 import { getCartItems, removeCartItem } from '../../actions/user_actions'
 import UserProductBlock from '../utils/User/product_block'
 
