@@ -11,7 +11,7 @@ const userSchema = mongoose.Schema({
     type: String,
     required: true,
     trim: true,
-    unique: 1
+    unique: true
   },
   password: {
     type: String,
@@ -45,26 +45,7 @@ const userSchema = mongoose.Schema({
   }
 });
 
-/**
- * This is the middleware, It will be called before saving any record
- */
-userSchema.pre("save", function(next) {
-  var user = this;
-  // only hash the password if it has been modified (or is new)
-  if (user.isModified("password")) {
-    bcrypt.genSalt(SALT_I, (err, salt) => {
-      if (err) return next(err);
 
-      bcrypt.hash(user.password, salt, (err, hash) => {
-        if (err) return next(err);
-        user.password = hash;
-        next();
-      });
-    });
-  } else {
-    next();
-  }
-});
 
 userSchema.methods.comparePassword = function(candidatePassword, callback) {
   bcrypt.compare(candidatePassword, this.password, function(err, isMatch) {

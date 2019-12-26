@@ -120,7 +120,7 @@ export function getWoods() {
 }
 
 export function addBrand(dataToSubmit, existingBrands){
-  const request = axios.post(`${PRODUCT_SERVER}/brand`,dataToSubmit)
+  const request = axios.post(`${PRODUCT_SERVER}/brands`,dataToSubmit)
   .then((response)=>{
     let brands = [
       ...existingBrands,
@@ -137,7 +137,7 @@ export function addBrand(dataToSubmit, existingBrands){
   }
 }
 export function addWood(dataToSubmit, existingWoods){
-  const request = axios.post(`${PRODUCT_SERVER}/wood`,dataToSubmit)
+  const request = axios.post(`${PRODUCT_SERVER}/woods`,dataToSubmit)
   .then((response)=>{
     let woods = [
       ...existingWoods,

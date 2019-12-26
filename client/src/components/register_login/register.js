@@ -121,8 +121,7 @@ class Register extends Component {
             this.setState({ formError: true });
           }
         })
-        .catch(err => {
-          console.log(err);
+        .catch(err => {          
           this.setState({ formError: true });
         });
     } else {
@@ -195,7 +194,7 @@ class Register extends Component {
           <div className="dialog_alert">
             <div>Felicitaciones</div>
             <div>
-              Seras redirigido al LOGIN en unos segundos!
+              Seras redirigido al Login en unos segundos!
             </div>
           </div>
         </Dialog>
