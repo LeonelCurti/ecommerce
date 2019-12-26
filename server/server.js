@@ -28,7 +28,7 @@ cloudinary.config({
   api_secret: process.env.CLOUD_API_SECRET
 });
 
-
+//add coment test merge and pull request
 //-----BRANDS--------------------
 
 app.use('/api/product/brands', require('./routes/brands'));
