@@ -107,7 +107,7 @@ app.post("/api/product/article", auth, admin, (req, res) => {
 //-------------------------------
 
 app.get("/api/users/auth", auth, (req, res) => {
-  res.status(200).json({
+  res.json({
     isAdmin: req.user.role === 0 ? false : true,
     isAuth: true,
     email: req.user.email,
@@ -122,39 +122,15 @@ app.get("/api/users/auth", auth, (req, res) => {
 app.get("/api/users/logout", auth, (req, res) => {
   User.findOneAndUpdate({ _id: req.user._id }, { token: "" }, (err, doc) => {
     if (err) return res.json({ success: false, err });
-    return res.status(200).json({ success: true });
+    return res.clearCookie('w_auth').json({ success: true });
   });
 });
 
 app.use('/api/users', require('./routes/users/register'));
 
-app.post("/api/users/login", (req, res) => {
-  User.findOne({ email: req.body.email }, (err, user) => {
-    //if email does not exist, return fail
-    if (!user)
-      return res.json({
-        loginSuccess: false,
-        message: "Auth failed, email not found"
-      });
-    //if email exist, retrieve user and
-    //compare password with DB password
-    user.comparePassword(req.body.password, (err, isMatch) => {
-      if (!isMatch)
-        return res.json({
-          loginSuccess: false,
-          message: "Wrong password"
-        });
+app.use('/api/users', require('./routes/users/login'));
 
-      user.generateToken((err, user) => {
-        if (err) return res.status(400).send(err);
-        res
-          .cookie("w_auth", user.token)
-          .status(200)
-          .json({ loginSuccess: true });
-      });
-    });
-  });
-});
+
 
 app.post("/api/users/uploadimage", auth, admin, formidable(), (req, res) => {
   cloudinary.uploader.upload(
