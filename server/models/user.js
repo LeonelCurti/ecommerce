@@ -1,8 +1,4 @@
 const mongoose = require("mongoose");
-const jwt = require("jsonwebtoken");
-const dotenv = require("dotenv");
-
-dotenv.config();
 
 const userSchema = mongoose.Schema({
   email: {
@@ -37,24 +33,8 @@ const userSchema = mongoose.Schema({
   role: {
     type: Number,
     default: 0
-  },
-  token: {
-    type: String
   }
 });
-
-
-//function used by auth middleware
-userSchema.statics.findByToken = function(token, callback){
-  var user = this;
-
-  jwt.verify(token, process.env.SECRET, function(err, decode){
-    user.findOne({"_id":decode,"token":token}, function(err, user){
-      if(err) return callback(err)
-      callback(null, user)
-    })
-  });
-}
 
 const User = mongoose.model("User", userSchema);
 

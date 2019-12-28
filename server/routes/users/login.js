@@ -46,23 +46,28 @@ router.post(
         return res.json({
           loginSuccess: false, message: "Invalid credentials"
         });
+      }     
+     
+      //generate token 
+
+      const payload = {
+        _id: user.id
       }
-      
-      //generate token
+      //posibilidad de agregar role o is admin
 
-      const token = jwt.sign(
-        user._id.toHexString(),
-        process.env.SECRET
-        );
-      
-      //save user with new token
-      user.token = token
-      await user.save()
+      jwt.sign(
+        payload,
+        process.env.SECRET,
+        (err, token) =>{
+          if(err) throw err;
+          return res.cookie("w_auth", token).json({ loginSuccess: true });
+        }
+      );   
+    
 
-      res.cookie("w_auth", token).json({ loginSuccess: true });
 
     } catch(err) {
-      console.log(err);
+      console.log(err); 
       
       res.json({
         loginSuccess: false,

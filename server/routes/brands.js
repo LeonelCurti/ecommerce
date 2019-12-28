@@ -19,8 +19,7 @@ router.get("/", (req, res) => {
 //@route   POST api/product/brands
 //@desc    add brand
 //@access  Private
-router.post("/", auth, admin, (req, res) => {
-  console.log('adding brand');
+router.post("/", auth, admin, (req, res) => {  
   const brand = new Brand(req.body);
 
   brand.save((err, doc) => {

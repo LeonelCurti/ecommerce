@@ -6,9 +6,9 @@ dotenv.config();
 let auth = async (req, res, next) => {
 
   //get token from client cookie
-  let token = req.cookies.w_auth;
-  
-  console.log('token recibido: ',token);
+  let token = req.cookies.w_auth; 
+
+  //check if no token
   if (!token) {
     return res.json({
       isAuth: false,
@@ -17,16 +17,15 @@ let auth = async (req, res, next) => {
   }
 
   try{  
-    
-    const decoded = jwt.verify(token, process.env.SECRET)
+    //verify token
+    const decoded = jwt.verify(token, process.env.SECRET);    
 
-    let user = await User.findOne({"_id":decoded,"token":token});
+    let user = await User.findOne({"_id": decoded._id});
 
     if(!user) {
       throw new Error('no user found');
     }
-
-    req.token = token;
+    
     req.user = user;
     next();
 
