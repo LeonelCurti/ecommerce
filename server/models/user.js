@@ -30,10 +30,10 @@ const userSchema = mongoose.Schema({
     type: Array,
     default: []
   },
-  role: {
-    type: Number,
-    default: 0
-  }
+  isAdmin:{
+    type: Boolean,
+    default: false
+  }  
 });
 
 const User = mongoose.model("User", userSchema);

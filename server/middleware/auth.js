@@ -18,13 +18,15 @@ let auth = async (req, res, next) => {
 
   try{  
     //verify token
-    const decoded = jwt.verify(token, process.env.SECRET);    
-
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    
+    //find decoded id in DB
     let user = await User.findOne({"_id": decoded._id});
 
     if(!user) {
       throw new Error('no user found');
     }
+    //if everything ok, pass user to next logic
     
     req.user = user;
     next();

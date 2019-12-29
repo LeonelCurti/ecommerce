@@ -2,13 +2,13 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 
-const links = [
+const generalLinks = [
   {
     name: "My account",
     linkTo: "/user/dashboard"
   },
   {
-    name: "User information",
+    name: "Info de usuario",
     linkTo: "/user/user_profile"
   },
   {
@@ -17,17 +17,17 @@ const links = [
   }
 ];
 
-const admin = [
+const adminLinks = [
   {
-    name: "Site info",
+    name: "Info del sitio",
     linkTo: "/admin/site_info"
   },
   {
-    name: "Add products",
+    name: "Agregar producto",
     linkTo: "/admin/add_product"
   },
   {
-    name: "Manage categories",
+    name: "Categorias",
     linkTo: "/admin/manage_categories"
   }
 ];
@@ -46,14 +46,14 @@ const UserLayout = props => {
         <div className="user_left_nav">
           <h2>Mi cuenta</h2>
           <div className="links">
-            {generateLinks(links)}
+            {generateLinks(generalLinks)}
           </div>
           {
             props.user.userData.isAdmin ? (
               <div>
                 <h2>Administrar</h2>
                 <div className="links">
-                  {generateLinks(admin)}
+                  {generateLinks(adminLinks)}
                 </div>
               </div>
             ) : null

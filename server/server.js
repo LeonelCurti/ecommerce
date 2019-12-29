@@ -28,7 +28,7 @@ cloudinary.config({
   api_secret: process.env.CLOUD_API_SECRET
 });
 
-//add coment test merge and pull request
+
 //-----BRANDS--------------------
 
 app.use('/api/product/brands', require('./routes/brands'));
@@ -106,25 +106,12 @@ app.post("/api/product/article", auth, admin, (req, res) => {
 //-----USERS---------------------
 //-------------------------------
 
-app.get("/api/users/auth", auth, (req, res) => {
-  res.json({
-    isAdmin: req.user.role === 0 ? false : true,
-    isAuth: true,
-    email: req.user.email,
-    name: req.user.name,
-    lastname: req.user.lastname,
-    role: req.user.role,
-    cart: req.user.cart,
-    history: req.user.history
-  });
-});
 
-app.get("/api/users/logout", auth, (req, res) => {
-
-    return res.clearCookie('w_auth').json({ success: true }); 
-});
+app.use('/api/users', require('./routes/users/auth'));
 
 app.use('/api/users', require('./routes/users/register'));
+
+app.use('/api/users', require('./routes/users/logout'));
 
 app.use('/api/users', require('./routes/users/login'));
 

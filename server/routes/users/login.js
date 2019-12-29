@@ -53,11 +53,11 @@ router.post(
       const payload = {
         _id: user.id
       }
-      //posibilidad de agregar role o is admin
+      //posibilidad de agregar  o is admin
 
       jwt.sign(
         payload,
-        process.env.SECRET,
+        process.env.JWT_SECRET,
         (err, token) =>{
           if(err) throw err;
           return res.cookie("w_auth", token).json({ loginSuccess: true });

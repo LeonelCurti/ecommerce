@@ -6,7 +6,7 @@ const { admin } = require("../middleware/admin");
 
 //@route   POST api/product/woods
 //@desc    add wood
-//@access  Private
+//@access  Private, Admin
 router.post("/", auth, admin, (req, res) => {
   const wood = new Wood(req.body);
 
