@@ -24,7 +24,7 @@ router.post("/", auth, admin, (req, res) => {
 
   brand.save((err, doc) => {
     if (err) return res.json({ success: false, err });
-    res.status(200).json({
+    res.json({
       success: true,
       brand: doc
     });

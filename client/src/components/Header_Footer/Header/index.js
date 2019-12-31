@@ -12,7 +12,7 @@ class Header extends Component {
         public: true
       },
       {
-        name: "Guitars",
+        name: "Shop",
         linkTo: "/shop",
         public: true
       }
@@ -75,14 +75,14 @@ class Header extends Component {
     );
   };
 
-  showLinks = type => {
+  showLinks = links => {
     let list = [];
-    // const {userData} = this.props.user.userData;
+    
     if (this.props.user.userData) {
       //if there is a user
-      type.forEach(item => {
+      links.forEach(item => {
         if (!this.props.user.userData.isAuth) {
-          //if is not auth push all public true
+          //if not auth push all public true
           if (item.public) list.push(item);
         } else {
           //if is auth push all but not log in

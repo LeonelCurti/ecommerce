@@ -192,9 +192,9 @@ class Register extends Component {
         </div>
         <Dialog open={this.state.formSuccess}>
           <div className="dialog_alert">
-            <div>Felicitaciones</div>
+            <div>Bienvenido</div>
             <div>
-              Seras redirigido al Login en unos segundos!
+              Seras redirigido al Login!
             </div>
           </div>
         </Dialog>
