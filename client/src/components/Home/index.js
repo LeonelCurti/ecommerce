@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import HomeSlider from "./home_slider";
-import HomePromotion from "./home_promotion";
 import CardBlock from "../utils/card_block";
 import { connect } from "react-redux";
 import {getProductsByArrival, getProductsBySell} from '../../actions/product_actions'
@@ -20,12 +19,11 @@ class Home extends Component {
         <CardBlock 
           list={this.props.products.bySell}
           title='Best Selling guitars'
-          />
-        <HomePromotion />
+        />        
         <CardBlock 
           list={this.props.products.byArrival}
           title='New Arrivals'
-          />
+        />
       </div>
     );
   }

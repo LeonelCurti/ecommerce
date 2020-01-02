@@ -10,7 +10,12 @@ import {
   CLEAR_UPDATE_USER_DATA
 } from "../actions/types";
 
-const INITIAL_STATE = {};
+const INITIAL_STATE = {
+  userData: {
+    isAuth:false,
+    error:true
+  }
+};
 
 const userReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {

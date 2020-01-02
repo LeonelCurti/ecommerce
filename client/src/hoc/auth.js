@@ -19,7 +19,7 @@ export default function(ComposedClass, reload, adminRoute = null) {
 
         if (!user.isAuth) {
           //user NOT authenticated
-          if (reload) this.props.history.push("/register_login");
+          if (reload) this.props.history.push("/login");
         } else {
           //user authenticated
           if (adminRoute && !user.isAdmin) {

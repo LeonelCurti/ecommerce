@@ -8,15 +8,19 @@ import ScrollToTop from "./components/utils/ScrollToTop";
 
 import { Provider } from "react-redux";
 import { createStore, applyMiddleware } from "redux";
-import promiseMiddleware from 'redux-promise';
-import ReduxThunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
 
-import Reducer from './reducers';
+import promiseMiddleware from 'redux-promise';
+import reduxThunk from 'redux-thunk';
 
-const middleware = [promiseMiddleware,ReduxThunk];
+import rootReducer from './reducers';
 
-const store = createStore(Reducer, composeWithDevTools(applyMiddleware(...middleware)));
+const middleware = [promiseMiddleware, reduxThunk];
+
+const store = createStore(
+  rootReducer, 
+  composeWithDevTools(applyMiddleware(...middleware))
+);
 
 ReactDOM.render(
   <Provider 

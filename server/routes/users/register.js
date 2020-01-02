@@ -21,15 +21,16 @@ router.post(
     const errors = validationResult(req);
     //check  for errors
     if (!errors.isEmpty()) {
-      return res.status(400).json({ success: false, err: errors.array() });
+      return res.status(400).json({ success: false, err:'Please check your information and try again' });
     }
     const { name, lastname, email, password } = req.body;
     try {
+      
       let user = await User.findOne({ email });
 
       //see if user exist
       if (user) {
-        return res.json({ success: false, err: 'User already exist' });
+        return res.status(400).json({ success: false, err: 'Email already exist' });
       }
 
       //create new user
@@ -42,11 +43,11 @@ router.post(
       //save user
       await user.save()
 
-      return res.status(200).json({ success: true });
+      return res.json({ success: true });
 
     } catch(err) {
-        console.log(err);
-        return res.status(500).json({ success: false, err });
+        console.log(err.message);
+        return res.status(500).json({ success: false, err: 'Server error, please try again' });
     }   
   }
 );

@@ -13,7 +13,6 @@ import {
 import { USER_SERVER, PRODUCT_SERVER } from "../components/utils/misc";
 
 export function addToCart(_id){
-
   const request = axios.post(`${USER_SERVER}/addToCart?productId=${_id}`)
   .then( response => response.data)
 
@@ -44,15 +43,25 @@ export function logoutUser(){
     };
 }
 
-export function registerUser(dataToSubmit) {
-  const request = axios
-    .post(`${USER_SERVER}/register`, dataToSubmit)
-    .then(response => response.data);
+
+export async function registerUser(dataToSubmit) {
+  try {
+    const response = await axios.post(`${USER_SERVER}/register`, dataToSubmit)
+    console.log(response);
     
-  return {
-    type: REGISTER_USER,
-    payload: request
-  };
+    return {
+      type: REGISTER_USER,
+      payload: response.data
+    };
+      
+  } catch (err) {
+    console.log(err.response);
+    
+    return {
+      type: REGISTER_USER,
+      payload: err.response.data
+    };
+  }        
 }
 
 export function auth() {

@@ -9,6 +9,7 @@ import { registerUser } from "../../actions/user_actions";
 class Register extends Component {
   state = {
     formError: false,
+    errmsg:'',
     formSuccess: false,
     formData: {
       name: {
@@ -112,13 +113,17 @@ class Register extends Component {
           if (response.payload.success) {
             this.setState({
               formError: false,
-              formSuccess: true
+              formSuccess: true,
+              errmsg: ''
             });
             setTimeout(()=>{
-              this.props.history.push('/register_login')
+              this.props.history.push('/login')
             },3000) 
           } else {
-            this.setState({ formError: true });
+            this.setState({ 
+              formError: true,
+              errmsg: response.payload.err 
+            });
           }
         })
         .catch(err => {          
@@ -136,6 +141,8 @@ class Register extends Component {
           <div className="register_login_container">
             <div className="left">
               <form onSubmit={this.submitForm}>
+
+                <h2>Crear cuenta</h2>
                 <h2>Informacion personal</h2>
                 <div className="form_block_two">
                   <div className="block">
@@ -180,11 +187,11 @@ class Register extends Component {
                 <div>
                   {this.state.formError ? (
                     <div className="error_label">
-                      Por favor revise la informacion ingresada
+                      {this.state.errmsg}
                     </div>
                   ) : null}
 
-                  <button onClick={this.submitForm}>Crear cuenta</button>
+                  <button onSubmit={this.submitForm}>Crear</button>
                 </div>
               </form>
             </div>

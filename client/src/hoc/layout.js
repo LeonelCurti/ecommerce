@@ -7,13 +7,11 @@ export default class Layout extends Component {
   
   render() {
     return (
-      <div>
-        <Header/>
-        <div className="page_container">
-          {this.props.children}
-        </div>
+      <React.Fragment>
+        <Header/>        
+          {this.props.children}        
         <Footer/>
-      </div>
+      </React.Fragment>
     )
   }
 }

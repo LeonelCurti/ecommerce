@@ -1,70 +1,19 @@
 import React, { Component } from "react";
 import { Link, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-import { logoutUser } from '../../../actions/user_actions'
+import { logoutUser } from "../../../actions/user_actions";
 
 class Header extends Component {
-  state = {
-    page: [
-      {
-        name: "Home",
-        linkTo: "/",
-        public: true
-      },
-      {
-        name: "Shop",
-        linkTo: "/shop",
-        public: true
-      }
-    ],
-    user: [
-      {
-        name: "My Cart",
-        linkTo: "/user/cart",
-        public: false
-      },
-      {
-        name: "My Account",
-        linkTo: "/user/dashboard",
-        public: false
-      },
-      {
-        name: "Log in",
-        linkTo: "/register_login",
-        public: true
-      },
-      {
-        name: "Log out",
-        linkTo: "/user/logout",
-        public: false
-      }
-    ]
-  };
+ 
 
-  logoutHandler = ()=>{
-    this.props.dispatch(logoutUser())
-    .then(response => {
+  logoutHandler = () => {
+    this.props.dispatch(logoutUser()).then(response => {
       if (response.payload.success) {
-        this.props.history.push('/')
+        this.props.history.push("/");
       }
-    })
-  }
-
-  defaultLink = (item, i) =>
-    item.name === "Log out" ? (
-      <div 
-        className='log_out_link'
-        key={i}
-        onClick={() =>this.logoutHandler()}
-      >{item.name}
-
-      </div>
-    ) : (
-      <Link to={item.linkTo} key={i}>
-        {item.name}
-      </Link>
-    );
-
+    });
+  };  
+  // PONER INDICADOR DE ELEMENTOS EN MY CART
   cartLink = (item, i) => {
     const user = this.props.user.userData;
     return (
@@ -73,45 +22,44 @@ class Header extends Component {
         <Link to={item.linkTo}>{item.name}</Link>
       </div>
     );
-  };
+  }; 
 
-  showLinks = links => {
-    let list = [];
-    
-    if (this.props.user.userData) {
-      //if there is a user
-      links.forEach(item => {
-        if (!this.props.user.userData.isAuth) {
-          //if not auth push all public true
-          if (item.public) list.push(item);
-        } else {
-          //if is auth push all but not log in
-          if (item.name !== "Log in") list.push(item);
-        }
-      });
-    }
-    return list.map((item, i) => {
-      if (item.name !== "My Cart") {
-        return this.defaultLink(item, i);
-      } else {
-        return this.cartLink(item, i);
-      }
-    });
-  };
-
-  render() {
+  render() {    
     return (
-      <header className="bck_b_light">
-        <div className="container">
-          <div className="left">
-            <div className="logo">WAVES</div>
-          </div>
-          <div className="right">
-            <div className="top">{this.showLinks(this.state.user)}</div>
-            <div className="bottom">{this.showLinks(this.state.page)}</div>
-          </div>
-        </div>
-      </header>
+      <nav className="navbar">
+        <h1>
+          <span className="text-primary">
+            <Link to="/">CASA | DECOR</Link>
+          </span>
+        </h1>
+        <ul>
+          <li>
+            <Link to="/shop">SHOP</Link>
+          </li>
+          {this.props.user.userData.isAuth ? (
+            <React.Fragment>
+              <li>
+                <Link to="/user/cart">MY CART</Link>
+              </li>
+              <li>
+                <Link to="/user/logout" onClick={() => this.logoutHandler()}>LOG OUT</Link>
+              </li>
+              <li>
+                <Link to="/user/dashboard">DASHBOARD</Link>
+              </li>
+            </React.Fragment>
+          ) : (
+            <React.Fragment>
+              <li>
+                <Link to="/login">LOG IN</Link>
+              </li>
+              <li>
+                <Link to="/register">REGISTER</Link>
+              </li>
+            </React.Fragment>
+          )}
+        </ul>
+      </nav>
     );
   }
 }

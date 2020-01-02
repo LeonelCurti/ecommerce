@@ -57,6 +57,8 @@ class Login extends Component {
     event.preventDefault();
 
     let dataToSubmit = generateData(this.state.formData, "login");
+    console.log(dataToSubmit);
+    
     let formIsValid = isFormValid(this.state.formData, "login");
 
     if (formIsValid) {
@@ -76,30 +78,44 @@ class Login extends Component {
 
   render() {
     return (
-      <div className="signin_wrapper">
-        <form onSubmit={this.submitForm}>
-          <Formfield
-            id={"email"}
-            formdata={this.state.formData.email}
-            change={element => this.updateForm(element)}
-          />
-          <Formfield
-            id={"password"}
-            formdata={this.state.formData.password}
-            change={element => this.updateForm(element)} 
-          />
+      <div className="page_wrapper">
+        <div className="container">
+          <div className="register_login_container">
+            <div className="right">
+              <h1>Iniciar sesion</h1>
+              <div className="signin_wrapper">
+                <form onSubmit={this.submitForm}>
+                  <Formfield
+                    id={"email"}
+                    formdata={this.state.formData.email}
+                    change={element => this.updateForm(element)}
+                  />
+                  <Formfield
+                    id={"password"}
+                    formdata={this.state.formData.password}
+                    change={element => this.updateForm(element)}
+                  />
 
-          {this.state.formError ? (
-            <div className="error_label">
-              Por favor revisar la informacion ingresada
+                  {this.state.formError ? (
+                    <div className="error_label">
+                      Por favor revisar la informacion ingresada
+                    </div>
+                  ) : null}
+
+                  <button onSubmit={this.submitForm}>LOG IN</button>
+                </form>
+              </div>
             </div>
-          ) : null}
-
-          <button onClick={this.submitForm}>LOG IN</button>
-        </form>
+          </div>
+        </div>
       </div>
     );
   }
 }
+
+
+
+
+
 
 export default connect()(withRouter(Login));
