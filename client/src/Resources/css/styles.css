@@ -11,7 +11,6 @@ body {
     margin: 0 auto;
 }
 .page_container {
-
     min-height: 75vh;
     padding-top: 85px;
 }
@@ -95,39 +94,6 @@ tr:nth-child(even) {
     background-color: #dddddd;
 }
 
-/*============================
-            NAVBAR LEO
-==============================*/
-
-.navbar ul {
-  display: flex;
-  align-items: center;
-  list-style: none;
-}
-
-.navbar ul li a {
-  padding: 0.75rem;
-  margin: 0 0.25rem;
-  font-size: 1.1rem;
-  line-height: 1.2;
-}
-
-.navbar ul li a:hover {
-  color: black;  
-}
-
-.navbar {
-  background: #F4F4F4;
-  display: flex;
-  top:0;
-  justify-content: space-between;
-  z-index: 1;
-  padding: 1rem;
-}
-
-.text-primary {
-  color:#585858;
-}
 
 /*============================
             FORM

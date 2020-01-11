@@ -2,17 +2,18 @@ import React, { Component } from "react";
 import { Link, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { logoutUser } from "../../../actions/user_actions";
+import { LinkContainer } from "react-router-bootstrap";
+
+import { Nav, Navbar, Container } from "react-bootstrap";
 
 class Header extends Component {
- 
-
   logoutHandler = () => {
     this.props.dispatch(logoutUser()).then(response => {
       if (response.payload.success) {
         this.props.history.push("/");
       }
     });
-  };  
+  };
   // PONER INDICADOR DE ELEMENTOS EN MY CART
   cartLink = (item, i) => {
     const user = this.props.user.userData;
@@ -22,44 +23,58 @@ class Header extends Component {
         <Link to={item.linkTo}>{item.name}</Link>
       </div>
     );
-  }; 
+  };
 
-  render() {    
+  render() {
     return (
-      <nav className="navbar">
-        <h1>
-          <span className="text-primary">
-            <Link to="/">CASA | DECOR</Link>
-          </span>
-        </h1>
-        <ul>
-          <li>
-            <Link to="/shop">SHOP</Link>
-          </li>
-          {this.props.user.userData.isAuth ? (
-            <React.Fragment>
-              <li>
-                <Link to="/user/cart">MY CART</Link>
-              </li>
-              <li>
-                <Link to="/user/logout" onClick={() => this.logoutHandler()}>LOG OUT</Link>
-              </li>
-              <li>
-                <Link to="/user/dashboard">DASHBOARD</Link>
-              </li>
-            </React.Fragment>
-          ) : (
-            <React.Fragment>
-              <li>
-                <Link to="/login">LOG IN</Link>
-              </li>
-              <li>
-                <Link to="/register">REGISTER</Link>
-              </li>
-            </React.Fragment>
-          )}
-        </ul>
-      </nav>
+      <Navbar
+        collapseOnSelect
+        bg="dark"
+        // style={{backgroundColor:'#6799a3'}}
+        variant="dark"
+        expand="sm"
+      >
+        <Container>
+          <LinkContainer to="/">
+            <Navbar.Brand>LOGO</Navbar.Brand>
+          </LinkContainer>
+          <Navbar.Toggle aria-controls="basic-navbar-nav" />
+          <Navbar.Collapse id="basic-navbar-nav">
+            <Nav className="ml-auto">
+              <LinkContainer to="/shop">
+                <Nav.Link>Shop</Nav.Link>
+              </LinkContainer>
+
+              {this.props.user.userData.isAuth ? (
+                <React.Fragment>
+                  <LinkContainer to="/user/cart">
+                    <Nav.Link>My cart</Nav.Link>
+                  </LinkContainer>
+
+                  <LinkContainer to="/user/logout">
+                    <Nav.Link onClick={() => this.logoutHandler()}>
+                      Log out
+                    </Nav.Link>
+                  </LinkContainer>
+
+                  <LinkContainer to="/user/dashboard">
+                    <Nav.Link>Dashboard</Nav.Link>
+                  </LinkContainer>
+                </React.Fragment>
+              ) : (
+                <React.Fragment>
+                  <LinkContainer to="/login">
+                    <Nav.Link>Log in</Nav.Link>
+                  </LinkContainer>
+                  <LinkContainer to="/register">
+                    <Nav.Link>Register</Nav.Link>
+                  </LinkContainer>
+                </React.Fragment>
+              )}              
+            </Nav>
+          </Navbar.Collapse>
+        </Container>
+      </Navbar>
     );
   }
 }

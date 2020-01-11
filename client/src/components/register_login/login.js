@@ -1,67 +1,45 @@
 import React, { Component } from "react";
-import Formfield from "../utils/Form/formfield";
-import { update, generateData, isFormValid } from "../utils/Form/formActions";
 import { withRouter } from "react-router-dom";
-
 import { connect } from "react-redux";
 import { loginUser } from "../../actions/user_actions";
 
+import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button";
+import Container from "react-bootstrap/Container";
+import Alert from "react-bootstrap/Alert";
+
 class Login extends Component {
   state = {
+    email: "",
+    password: "",
     formError: false,
-    formSuccess: "",
-    formData: {
-      email: {
-        element: "input",
-        value: "",
-        config: {
-          name: "email_input",
-          type: "email",
-          placeholder: "Ingrese su email"
-        },
-        validation: {
-          required: true,
-          email: true
-        },
-        valid: false,
-        touched: false,
-        validationMessage: ""
-      },
-      password: {
-        element: "input",
-        value: "",
-        config: {
-          name: "password_input",
-          type: "password",
-          placeholder: "Ingrese su password"
-        },
-        validation: {
-          required: true
-        },
-        valid: false,
-        touched: false,
-        validationMessage: ""
-      }
-    }
+    errorMsg: ""
   };
 
-  updateForm = element => {
-    const newFormData = update(element, this.state.formData, "login");
+  validateForm() {
+    return this.state.email.length > 0 && this.state.password.length > 0;
+  }
+
+  onChange = e => {
     this.setState({
-      formError: false,
-      formData: newFormData
+      [e.target.id]: e.target.value
     });
   };
 
-  submitForm = event => {
-    event.preventDefault();
+  submitForm = e => {
+    e.preventDefault();
+    const dataToSubmit = {
+      email: this.state.email.trim(),
+      password: this.state.password
+    };
 
-    let dataToSubmit = generateData(this.state.formData, "login");
-    console.log(dataToSubmit);
-    
-    let formIsValid = isFormValid(this.state.formData, "login");
+    //validate data
+    const emailExist = dataToSubmit.email !== "";
+    const passwordExist = dataToSubmit.password !== "";
+    const emailIsValid = /\S+@\S+\.\S+/.test(dataToSubmit.email);
 
-    if (formIsValid) {
+    //submit data with dispatch loginUser
+    if (emailExist && passwordExist && emailIsValid) {
       this.props.dispatch(loginUser(dataToSubmit)).then(response => {
         if (response.payload.loginSuccess) {
           this.props.history.push("/user/dashboard");
@@ -69,53 +47,71 @@ class Login extends Component {
           this.setState({
             formError: true
           });
+          setTimeout(() => {
+            this.setState({ formError: false });
+          }, 4000);
         }
       });
     } else {
       this.setState({ formError: true });
+      setTimeout(() => {
+        this.setState({ formError: false });
+      }, 4000);
     }
   };
 
   render() {
     return (
-      <div className="page_wrapper">
-        <div className="container">
-          <div className="register_login_container">
-            <div className="right">
-              <h1>Iniciar sesion</h1>
-              <div className="signin_wrapper">
-                <form onSubmit={this.submitForm}>
-                  <Formfield
-                    id={"email"}
-                    formdata={this.state.formData.email}
-                    change={element => this.updateForm(element)}
-                  />
-                  <Formfield
-                    id={"password"}
-                    formdata={this.state.formData.password}
-                    change={element => this.updateForm(element)}
-                  />
-
-                  {this.state.formError ? (
-                    <div className="error_label">
-                      Por favor revisar la informacion ingresada
-                    </div>
-                  ) : null}
-
-                  <button onSubmit={this.submitForm}>LOG IN</button>
-                </form>
-              </div>
-            </div>
-          </div>
+      <Container>
+        <div
+          style={{
+            padding: "60px 0"
+          }}
+        >
+          <Form
+            style={{
+              margin: "0 auto",
+              maxWidth: "320px"
+            }}
+            onSubmit={this.submitForm}
+          >
+            <Form.Group controlId="email">
+              <Form.Label>Email</Form.Label>
+              <Form.Control
+                autoFocus
+                required
+                type="email"
+                value={this.state.email}
+                onChange={this.onChange}
+              />
+            </Form.Group>
+            <Form.Group controlId="password">
+              <Form.Label>Password</Form.Label>
+              <Form.Control
+                required
+                value={this.state.password}
+                onChange={this.onChange}
+                type="password"
+              />
+            </Form.Group>
+            {this.state.formError && (
+              <Alert variant="danger">
+                Por favor revise la informacion ingresada
+              </Alert>
+            )}
+            <Button              
+              block
+              // variant="dark"
+              variant={!this.validateForm()? 'dark': 'primary'}
+              disabled={!this.validateForm()}
+              type="submit"
+            >
+              Login
+            </Button>
+          </Form>
         </div>
-      </div>
+      </Container>
     );
   }
 }
-
-
-
-
-
-
 export default connect()(withRouter(Login));
