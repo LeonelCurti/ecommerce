@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { loginUser } from "../../actions/user_actions";
 
@@ -12,8 +11,7 @@ class Login extends Component {
   state = {
     email: "",
     password: "",
-    formError: false,
-    errorMsg: ""
+    formError: false,    
   };
 
   validateForm() {
@@ -100,8 +98,7 @@ class Login extends Component {
               </Alert>
             )}
             <Button              
-              block
-              // variant="dark"
+              block              
               variant={!this.validateForm()? 'dark': 'primary'}
               disabled={!this.validateForm()}
               type="submit"
@@ -114,4 +111,5 @@ class Login extends Component {
     );
   }
 }
-export default connect()(withRouter(Login));
+export default connect()(Login);
+

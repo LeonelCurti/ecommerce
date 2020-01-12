@@ -1,211 +1,184 @@
 import React, { Component } from "react";
-import Formfield from "../utils/Form/formfield";
-import { update, generateData, isFormValid } from "../utils/Form/formActions";
-import Dialog from '@material-ui/core/Dialog';
-
 import { connect } from "react-redux";
 import { registerUser } from "../../actions/user_actions";
 
+import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button";
+import Container from "react-bootstrap/Container";
+import Alert from "react-bootstrap/Alert";
+import Spinner from 'react-bootstrap/Spinner'
+
 class Register extends Component {
   state = {
+    name: "",
+    lastName: "",
+    email: "",
+    password: "",
     formError: false,
-    errmsg:'',
-    formSuccess: false,
-    formData: {
-      name: {
-        element: "input",
-        value: "",
-        config: {
-          name: "name_input",
-          type: "text",
-          placeholder: "Ingrese su nombre"
-        },
-        validation: {
-          required: true
-        },
-        valid: false,
-        touched: false,
-        validationMessage: ""
-      },
-      lastname: {
-        element: "input",
-        value: "",
-        config: {
-          name: "lastname_input",
-          type: "text",
-          placeholder: "Ingrese su apellido"
-        },
-        validation: {
-          required: true
-        },
-        valid: false,
-        touched: false,
-        validationMessage: ""
-      },
-      email: {
-        element: "input",
-        value: "",
-        config: {
-          name: "email_input",
-          type: "email",
-          placeholder: "Ingrese su email"
-        },
-        validation: {
-          required: true,
-          email: true
-        },
-        valid: false,
-        touched: false,
-        validationMessage: ""
-      },
-      password: {
-        element: "input",
-        value: "",
-        config: {
-          name: "password_input",
-          type: "password",
-          placeholder: "Ingrese su contraseña"
-        },
-        validation: {
-          required: true
-        },
-        valid: false,
-        touched: false,
-        validationMessage: ""
-      },
-      confirmPassword: {
-        element: "input",
-        value: "",
-        config: {
-          name: "confirm_password_input",
-          type: "password",
-          placeholder: "Confirme su contraseña"
-        },
-        validation: {
-          required: true,
-          confirm: "password"
-        },
-        valid: false,
-        touched: false,
-        validationMessage: ""
-      }
-    }
+    registerSuccess: false,
+    errorMsg: ""
   };
 
-  updateForm = element => {
-    const newFormData = update(element, this.state.formData, "register");
-    this.setState({
-      formError: false,
-      formData: newFormData
+  onChange = e => {
+    this.setState({      
+      [e.target.id]: e.target.value
     });
   };
 
-  submitForm = event => {
-    event.preventDefault();
+  validateForm() {
+    return this.state.name.length > 0 && this.state.lastName.length > 0 &&
+    this.state.email.length > 0 && 
+    this.state.password.length > 0    
+  }
 
-    let dataToSubmit = generateData(this.state.formData, "register");
-    let formIsValid = isFormValid(this.state.formData, "register");
+  submitForm = e => {
+    e.preventDefault();
 
-    if (formIsValid) {
+    const dataToSubmit = {
+      name: this.state.name.trim(),
+      lastname: this.state.lastName.trim(),
+      email: this.state.email.trim(),
+      password: this.state.password
+    };
+
+    //validate data
+    const nameExist = dataToSubmit.name !== "";
+    const lastNameExist = dataToSubmit.lastname !== "";
+    const emailExist = dataToSubmit.email !== "";
+    const passwordExist = dataToSubmit.password !== "";
+    const passwordlenght = dataToSubmit.password.length > 4;
+    const emailIsValid = /\S+@\S+\.\S+/.test(dataToSubmit.email);
+
+    //submit data with dispatch registerUser
+    if (
+      nameExist &&
+      lastNameExist &&
+      emailExist &&
+      passwordExist &&
+      passwordlenght &&
+      emailIsValid
+    ) {
       this.props
         .dispatch(registerUser(dataToSubmit))
         .then(response => {
           if (response.payload.success) {
             this.setState({
-              formError: false,
-              formSuccess: true,
-              errmsg: ''
+              registerSuccess: true
             });
-            setTimeout(()=>{
-              this.props.history.push('/login')
-            },3000) 
-          } else {
-            this.setState({ 
+            setTimeout(() => {
+              this.props.history.push("/login");
+            }, 4000);
+          } else {                        
+            this.setState({
               formError: true,
-              errmsg: response.payload.err 
+              errorMsg: response.payload.err
             });
+            setTimeout(() => {
+              this.setState({
+                formError: false,
+                errorMsg: ""
+              });
+            }, 5000);
           }
         })
         .catch(err => {          
-          this.setState({ formError: true });
+          this.setState({
+            formError: true,
+            errorMsg:'Ha ocurrido un error, vuelva a intentarlo'
+          });
+          setTimeout(() => {
+            this.setState({
+              formError: false,
+              errorMsg: ""
+            });
+          }, 5000);
         });
     } else {
-      this.setState({ formError: true });
+      this.setState({
+        formError: true,
+        errorMsg: "Revise la informacion ingresada y vuelva a intentar"
+      });
+      setTimeout(() => {
+        this.setState({
+          formError: false,
+          errMsg: ""
+        });
+      }, 5000);
     }
   };
 
   render() {
     return (
-      <div className="page_wrapper">
-        <div className="container">
-          <div className="register_login_container">
-            <div className="left">
-              <form onSubmit={this.submitForm}>
-
-                <h2>Crear cuenta</h2>
-                <h2>Informacion personal</h2>
-                <div className="form_block_two">
-                  <div className="block">
-                    <Formfield
-                      id={"name"}
-                      formdata={this.state.formData.name}
-                      change={element => this.updateForm(element)}
-                    />
-                  </div>
-                  <div className="block">
-                    <Formfield
-                      id={"lastname"}
-                      formdata={this.state.formData.lastname}
-                      change={element => this.updateForm(element)}
-                    />
-                  </div>
-                </div>
-                <div>
-                  <Formfield
-                    id={"email"}
-                    formdata={this.state.formData.email}
-                    change={element => this.updateForm(element)}
-                  />
-                </div>
-                <h2>Verificar contraseña</h2>
-                <div className="form_block_two">
-                  <div className="block">
-                    <Formfield
-                      id={"password"}
-                      formdata={this.state.formData.password}
-                      change={element => this.updateForm(element)}
-                    />
-                  </div>
-                  <div className="block">
-                    <Formfield
-                      id={"confirmPassword"}
-                      formdata={this.state.formData.confirmPassword}
-                      change={element => this.updateForm(element)}
-                    />
-                  </div>
-                </div>
-                <div>
-                  {this.state.formError ? (
-                    <div className="error_label">
-                      {this.state.errmsg}
-                    </div>
-                  ) : null}
-
-                  <button onSubmit={this.submitForm}>Crear</button>
-                </div>
-              </form>
-            </div>
-          </div>
+      <Container>
+        <div
+          style={{
+            padding: "60px 0"
+          }}
+        >
+          <Form
+            style={{
+              margin: "0 auto",
+              maxWidth: "320px"
+            }}
+            onSubmit={this.submitForm}
+          >
+            <Form.Group controlId="name">
+              <Form.Label>Nombre</Form.Label>
+              <Form.Control
+                autoFocus
+                required
+                type="text"
+                value={this.state.name}
+                onChange={this.onChange}
+              />
+            </Form.Group>
+            <Form.Group controlId="lastName">
+              <Form.Label>Apellido</Form.Label>
+              <Form.Control
+                required
+                type="text"
+                value={this.state.lastName}
+                onChange={this.onChange}
+              />
+            </Form.Group>
+            <Form.Group controlId="email">
+              <Form.Label>Email</Form.Label>
+              <Form.Control
+                required
+                type="email"
+                value={this.state.email}
+                onChange={this.onChange}
+              />
+            </Form.Group>
+            <Form.Group controlId="password">
+              <Form.Label>Contraseña</Form.Label>
+              <Form.Control
+                required
+                placeholder="5 o más caracteres"
+                value={this.state.password}
+                onChange={this.onChange}
+                type="password"
+              />
+            </Form.Group>
+            {this.state.registerSuccess && (
+              <Alert variant="success">
+                <Spinner style={{marginRight:'10px'}} animation="border" variant="success" /><span>Redirigiendo al login</span>
+              </Alert>
+            )}
+            {this.state.formError && (              
+              <Alert variant="danger">{this.state.errorMsg}</Alert>
+            )}
+            <Button
+              block              
+              variant={!this.validateForm()? 'dark': 'primary'}
+              disabled={!this.validateForm()}
+              type="submit"
+            >
+              Register
+            </Button>
+          </Form>
         </div>
-        <Dialog open={this.state.formSuccess}>
-          <div className="dialog_alert">
-            <div>Bienvenido</div>
-            <div>
-              Seras redirigido al Login!
-            </div>
-          </div>
-        </Dialog>
-      </div>
+      </Container>
     );
   }
 }

@@ -54,9 +54,7 @@ export async function registerUser(dataToSubmit) {
       payload: response.data
     };
       
-  } catch (err) {
-    console.log(err.response);
-    
+  } catch (err) {    
     return {
       type: REGISTER_USER,
       payload: err.response.data
