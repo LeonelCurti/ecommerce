@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
+import Container from "react-bootstrap/Container";
 
 const generalLinks = [
   {
@@ -41,27 +42,21 @@ const UserLayout = props => {
     ));
 
   return (
-    <div className="container">
+    <Container>
       <div className="user_container">
         <div className="user_left_nav">
           <h2>Mi cuenta</h2>
-          <div className="links">
-            {generateLinks(generalLinks)}
-          </div>
-          {
-            props.user.userData.isAdmin ? (
-              <div>
-                <h2>Administrar</h2>
-                <div className="links">
-                  {generateLinks(adminLinks)}
-                </div>
-              </div>
-            ) : null
-          }
+          <div className="links">{generateLinks(generalLinks)}</div>
+          {props.user.userData.isAdmin ? (
+            <div>
+              <h2>Administrar</h2>
+              <div className="links">{generateLinks(adminLinks)}</div>
+            </div>
+          ) : null}
         </div>
         <div className="user_right">{props.children}</div>
       </div>
-    </div>
+    </Container>
   );
 };
 

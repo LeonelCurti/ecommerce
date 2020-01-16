@@ -12,9 +12,10 @@ import CollapseCheckbox from "../utils/collapseCheckbox";
 import CollapseRadio from "../utils/collapseRadio";
 import { frets, prices } from "../utils/Form/fixed_categories";
 
-import LoadMoreCards from './loadMoreCards'
+import LoadMoreCards from "./loadMoreCards";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBars , faTh } from "@fortawesome/free-solid-svg-icons";
+import { faBars, faTh } from "@fortawesome/free-solid-svg-icons";
+import Container from "react-bootstrap/Container";
 
 class Shop extends Component {
   state = {
@@ -74,33 +75,36 @@ class Shop extends Component {
       });
   };
 
-  loadMoreCards = () =>{
+  loadMoreCards = () => {
     let skip = this.state.skip + this.state.limit;
 
-    this.props.dispatch(getProductsToShop(
-      skip, 
-      this.state.limit, 
-      this.state.filters, 
-      this.props.products.toShop 
-    ))
-    .then(()=>{
-      this.setState({
-        skip
-      })
-    })
-  }
+    this.props
+      .dispatch(
+        getProductsToShop(
+          skip,
+          this.state.limit,
+          this.state.filters,
+          this.props.products.toShop
+        )
+      )
+      .then(() => {
+        this.setState({
+          skip
+        });
+      });
+  };
 
-  handleGrid = () =>{
+  handleGrid = () => {
     // '' is false
     this.setState({
-      grid: !this.state.grid ? 'grid_bars':''
-    })
-  }
+      grid: !this.state.grid ? "grid_bars" : ""
+    });
+  };
 
   render() {
     const products = this.props.products;
     return (
-      <div className="container">
+      <Container>
         <PageTop title="Browse Products" />
 
         <div>
@@ -135,17 +139,17 @@ class Shop extends Component {
             <div className="right">
               <div className="shop_options">
                 <div className="shop_grids clear">
-                  <div 
-                    className={`grid_btn ${this.state.grid?'':'active'}`}
-                    onClick={()=>this.handleGrid()}
+                  <div
+                    className={`grid_btn ${this.state.grid ? "" : "active"}`}
+                    onClick={() => this.handleGrid()}
                   >
-                    <FontAwesomeIcon icon={faTh}/>
+                    <FontAwesomeIcon icon={faTh} />
                   </div>
-                  <div 
-                    className={`grid_btn ${!this.state.grid?'':'active'}`}
-                    onClick={()=>this.handleGrid()}
+                  <div
+                    className={`grid_btn ${!this.state.grid ? "" : "active"}`}
+                    onClick={() => this.handleGrid()}
                   >
-                    <FontAwesomeIcon icon={faBars}/>
+                    <FontAwesomeIcon icon={faBars} />
                   </div>
                 </div>
               </div>
@@ -154,12 +158,12 @@ class Shop extends Component {
                 limit={this.state.limit}
                 size={products.toShopSize}
                 products={products.toShop}
-                loadMore={()=>this.loadMoreCards()}
-                />
+                loadMore={() => this.loadMoreCards()}
+              />
             </div>
           </div>
         </div>
-      </div>
+      </Container>
     );
   }
 }

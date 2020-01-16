@@ -1,14 +1,12 @@
-import React from 'react'
+import React from "react";
+import Container from "react-bootstrap/Container";
 
-
-const PageTop = (props) => {
+const PageTop = props => {
   return (
-    <div className='page_top'>
-      <div className="container">
-        {props.title}
-      </div>
+    <div className="page_top">
+      <Container>{props.title}</Container>
     </div>
-  )
-}
+  );
+};
 
-export default PageTop
+export default PageTop;

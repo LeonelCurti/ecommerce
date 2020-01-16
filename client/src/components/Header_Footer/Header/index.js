@@ -29,14 +29,14 @@ class Header extends Component {
     return (
       <Navbar
         collapseOnSelect
-        bg="dark"
-        // style={{backgroundColor:'#6799a3'}}
+        bg="primary"
+        // style={{backgroundColor:'#f6648C'}}//sacar bg
         variant="dark"
-        expand="sm"
+        expand="sm"        
       >
         <Container>
           <LinkContainer to="/">
-            <Navbar.Brand>LOGO</Navbar.Brand>
+            <Navbar.Brand>CASA DECOR</Navbar.Brand>
           </LinkContainer>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">

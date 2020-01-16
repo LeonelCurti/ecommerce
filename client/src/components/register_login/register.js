@@ -6,7 +6,7 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import Alert from "react-bootstrap/Alert";
-import Spinner from 'react-bootstrap/Spinner'
+import Spinner from "react-bootstrap/Spinner";
 
 class Register extends Component {
   state = {
@@ -20,15 +20,18 @@ class Register extends Component {
   };
 
   onChange = e => {
-    this.setState({      
+    this.setState({
       [e.target.id]: e.target.value
     });
   };
 
   validateForm() {
-    return this.state.name.length > 0 && this.state.lastName.length > 0 &&
-    this.state.email.length > 0 && 
-    this.state.password.length > 0    
+    return (
+      this.state.name.length > 0 &&
+      this.state.lastName.length > 0 &&
+      this.state.email.length > 0 &&
+      this.state.password.length > 0
+    );
   }
 
   submitForm = e => {
@@ -68,7 +71,7 @@ class Register extends Component {
             setTimeout(() => {
               this.props.history.push("/login");
             }, 4000);
-          } else {                        
+          } else {
             this.setState({
               formError: true,
               errorMsg: response.payload.err
@@ -81,10 +84,10 @@ class Register extends Component {
             }, 5000);
           }
         })
-        .catch(err => {          
+        .catch(err => {
           this.setState({
             formError: true,
-            errorMsg:'Ha ocurrido un error, vuelva a intentarlo'
+            errorMsg: "Ha ocurrido un error, vuelva a intentarlo"
           });
           setTimeout(() => {
             this.setState({
@@ -112,7 +115,7 @@ class Register extends Component {
       <Container>
         <div
           style={{
-            padding: "60px 0"
+            padding: "2rem 0"
           }}
         >
           <Form
@@ -121,11 +124,12 @@ class Register extends Component {
               maxWidth: "320px"
             }}
             onSubmit={this.submitForm}
-          >
+            >
+            <h2 className="text-center">Register</h2>
             <Form.Group controlId="name">
               <Form.Label>Nombre</Form.Label>
               <Form.Control
-                autoFocus
+                // autoFocus
                 required
                 type="text"
                 value={this.state.name}
@@ -154,23 +158,30 @@ class Register extends Component {
               <Form.Label>Contraseña</Form.Label>
               <Form.Control
                 required
-                placeholder="5 o más caracteres"
                 value={this.state.password}
                 onChange={this.onChange}
                 type="password"
               />
+              <Form.Text className="text-muted">
+                La contraseña debe contener 5 o más caracteres.
+              </Form.Text>
             </Form.Group>
             {this.state.registerSuccess && (
               <Alert variant="success">
-                <Spinner style={{marginRight:'10px'}} animation="border" variant="success" /><span>Redirigiendo al login</span>
+                <Spinner
+                  style={{ marginRight: "10px" }}
+                  animation="border"
+                  variant="success"
+                />
+                <span>Redirigiendo al login</span>
               </Alert>
             )}
-            {this.state.formError && (              
+            {this.state.formError && (
               <Alert variant="danger">{this.state.errorMsg}</Alert>
-            )}
+            )}            
             <Button
-              block              
-              variant={!this.validateForm()? 'dark': 'primary'}
+              block
+              variant={!this.validateForm() ? "dark" : "primary"}
               disabled={!this.validateForm()}
               type="submit"
             >

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { auth } from "../actions/user_actions";
-import CircularProgress from "@material-ui/core/CircularProgress";
+import Spinner from 'react-bootstrap/Spinner'
 
 // composedclass is the componet that we will render if //everything is ok
 export default function(ComposedClass, reload, adminRoute = null) {
@@ -38,13 +38,14 @@ export default function(ComposedClass, reload, adminRoute = null) {
     }
 
     render() {
+      // return true ? (
       return this.state.loading ? (
-        <div className="main_loader">
-          <CircularProgress style={{ color: "#2196F" }} thickness={7} />
+        <div className="main_loader">          
+          <Spinner animation="border" />          
         </div>
       ) : (
         <ComposedClass {...this.props} user={this.props.user} />
-      );
+      );    
     }
   }
 

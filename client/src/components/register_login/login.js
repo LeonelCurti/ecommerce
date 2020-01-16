@@ -63,7 +63,7 @@ class Login extends Component {
       <Container>
         <div
           style={{
-            padding: "60px 0"
+            padding: "2.5rem 0"
           }}
         >
           <Form
@@ -73,10 +73,11 @@ class Login extends Component {
             }}
             onSubmit={this.submitForm}
           >
+            <h2 className="text-center">Log in</h2>
             <Form.Group controlId="email">
               <Form.Label>Email</Form.Label>
               <Form.Control
-                autoFocus
+                // autoFocus
                 required
                 type="email"
                 value={this.state.email}
@@ -97,7 +98,8 @@ class Login extends Component {
                 Por favor revise la informacion ingresada
               </Alert>
             )}
-            <Button              
+            <Button
+              className='mt-4'              
               block              
               variant={!this.validateForm()? 'dark': 'primary'}
               disabled={!this.validateForm()}

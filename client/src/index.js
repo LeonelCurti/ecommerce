@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "./Resources/css/styles.css";
+import "./Resources/css/mobile.css";
 
 
 import { BrowserRouter } from "react-router-dom";

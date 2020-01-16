@@ -8,6 +8,7 @@ import { addToCart } from '../../actions/user_actions'
 
 import ProdNfo from "./prodNfo";
 import ProdImg from "./prod_img";
+import Container from "react-bootstrap/Container";
 
 class ProductPage extends Component {  
 
@@ -46,23 +47,24 @@ class ProductPage extends Component {
     return (
       <div>
         <PageTop title="Product detail" />
-        <div className="container">
+        <Container>
+
           {this.props.products.prodDetail ? (
             <div className="product_detail_wrapper">          
               <div className="left">
                 <div style={{ width: "500px" }}>
                   <ProdImg
                   images={this.modifiedImageToPass(
-                      this.props.products.prodDetail.images
+                    this.props.products.prodDetail.images
                     )}
-                  />                  
+                    />                  
                 </div>
               </div>
               <div className="right">
                 <ProdNfo
                   addToCart={id => this.addToCartHandler(id)}
                   detail={this.props.products.prodDetail}
-                />
+                  />
               </div>
             </div>
           ) : (
@@ -70,11 +72,11 @@ class ProductPage extends Component {
               <CircularProgress 
                 style={{color:'#00bcd4'}}
                 thikness={7}
-              />
+                />
 
             </div>
-          )}
-        </div>
+          )}        
+        </Container>
       </div>
     );
   }

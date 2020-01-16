@@ -39,7 +39,8 @@ router.post(
         });
       }
       
-      //compare password
+      //compare password      
+      
 
       const isMatch = await bcrypt.compare(password, user.password);
       if (!isMatch) {
@@ -53,7 +54,7 @@ router.post(
       const payload = {
         _id: user.id
       }
-      //posibilidad de agregar  o is admin
+      
 
       jwt.sign(
         payload,

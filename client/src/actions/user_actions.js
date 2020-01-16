@@ -46,8 +46,7 @@ export function logoutUser(){
 
 export async function registerUser(dataToSubmit) {
   try {
-    const response = await axios.post(`${USER_SERVER}/register`, dataToSubmit)
-    console.log(response);
+    const response = await axios.post(`${USER_SERVER}/register`, dataToSubmit)    
     
     return {
       type: REGISTER_USER,

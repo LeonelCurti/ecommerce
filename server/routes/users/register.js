@@ -46,7 +46,7 @@ router.post(
       return res.json({ success: true });
 
     } catch(err) {
-        console.log(err.message);
+        console.log(err);
         return res.status(500).json({ success: false, err: 'Server error, please try again' });
     }   
   }

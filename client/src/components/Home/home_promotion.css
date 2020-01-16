@@ -1,0 +1,36 @@
+/*============================
+        FEATURED PROMOTION
+==============================*/
+
+.home_promotion .home_promotion_img {
+  height: 400px;
+  background-size: cover !important;
+  background-position: top center !important;
+  padding: 73px;
+  box-sizing: border-box;
+}
+
+.home_promotion .tag {
+  background: #82828287;
+  color: #ffffff;
+  padding: 0px 20px;
+  text-transform: uppercase;
+  display: table;
+}
+
+.home_promotion .tag.title {
+  font-size: 70px;
+  font-weight: 700;
+  margin: 10px auto;
+}
+
+.home_promotion .tag.low_title {
+  font-size: 50px;
+  font-weight: 300;
+  margin-top: 10px;
+  margin: 0 auto;
+}
+
+.home_promotion .my_link a {
+  margin: 10px auto;
+}
