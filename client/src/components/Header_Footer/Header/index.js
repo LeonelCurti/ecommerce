@@ -25,52 +25,63 @@ class Header extends Component {
     );
   };
 
-  render() {
+  render() {   
+    
     return (
-      <Navbar
+      
+      <Navbar 
         collapseOnSelect
-        bg="primary"
-        // style={{backgroundColor:'#f6648C'}}//sacar bg
-        variant="dark"
+        // bg="primary"
+        className='navbar-custom'       
+        style={{
+          backgroundColor: "white",
+        }} //sacar bg
+        // variant="dark"        
         expand="sm"        
-      >
+        fixed='top'
+        
+      >       
         <Container>
           <LinkContainer to="/">
-            <Navbar.Brand>CASA DECOR</Navbar.Brand>
+            <Navbar.Brand>Black Hawk</Navbar.Brand>
           </LinkContainer>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className="ml-auto">
+            <Nav            
+            className="ml-auto"
+            >          
+                           
               <LinkContainer to="/shop">
-                <Nav.Link>Shop</Nav.Link>
+                <Nav.Link>SHOP</Nav.Link>
               </LinkContainer>
+                   
 
               {this.props.user.userData.isAuth ? (
                 <React.Fragment>
                   <LinkContainer to="/user/cart">
-                    <Nav.Link>My cart</Nav.Link>
+                    <Nav.Link>CART</Nav.Link>
                   </LinkContainer>
 
                   <LinkContainer to="/user/logout">
                     <Nav.Link onClick={() => this.logoutHandler()}>
-                      Log out
+                      LOG OUT
                     </Nav.Link>
                   </LinkContainer>
 
                   <LinkContainer to="/user/dashboard">
-                    <Nav.Link>Dashboard</Nav.Link>
+                    <Nav.Link>DASHBOARD</Nav.Link>
                   </LinkContainer>
                 </React.Fragment>
               ) : (
                 <React.Fragment>
                   <LinkContainer to="/login">
-                    <Nav.Link>Log in</Nav.Link>
+                    <Nav.Link>LOG IN</Nav.Link>
                   </LinkContainer>
                   <LinkContainer to="/register">
-                    <Nav.Link>Register</Nav.Link>
+                    <Nav.Link>SIGN IN</Nav.Link>
                   </LinkContainer>
                 </React.Fragment>
-              )}              
+              )}
             </Nav>
           </Navbar.Collapse>
         </Container>
@@ -85,4 +96,6 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps)(withRouter(Header));
+export default connect(mapStateToProps, null, null,{
+  pure: false
+})(withRouter(Header));

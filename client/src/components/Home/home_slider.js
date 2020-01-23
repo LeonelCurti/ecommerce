@@ -5,7 +5,7 @@ import MyButton from "../utils/button";
 const HomeSlider = props => {
   const slides = [
     {
-      img: "/images/featured/featured_home.jpg",
+      img: "/images/featured/featured_home_1.jpg",
       lineOne: "Fender",
       lineTwo: "Custom shop",
       linkTitle: "Shop now",
@@ -21,53 +21,44 @@ const HomeSlider = props => {
   ];
 
   const settings = {
-    dots:false,
-    infinite:true,
-    speed:500,
-    slidesToShow:1,
+    dots: false,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
     arrows: false
-  }
+  };
 
-  const generateSlides = () => (
-    slides ?
-      slides.map((item,i)=>(
-        <div key={i}>
-          <div className="featured_image"
-            style={{
-              background:`url(${item.img})`,
-              height:`${window.innerHeight}px`
-            }}
-          >
-            <div className="featured_action">
-              <div className="tag title">
-                {item.lineOne}
+  const generateSlides = () =>
+    slides
+      ? slides.map((item, i) => (
+          <div key={i}>
+            <div
+              className="featured_image"
+              style={{
+                background: `url(${item.img})`,
+                height: `${window.innerHeight}px`
+              }}
+            >
+              <div className="featured_action">
+                <div className="tag title">{item.lineOne}</div>
+                <div className="tag low_title">{item.lineTwo}</div>
+                <MyButton
+                  type="default"
+                  title={item.linkTitle}
+                  linkTo={item.linkTo}
+                  addStyles={{ margin: "10px 0 0 0" }}
+                />
               </div>
-              <div className="tag low_title">
-                {item.lineTwo}
-              </div>
-              <MyButton 
-                type='default'
-                title={item.linkTitle}
-                linkTo={item.linkTo}
-                addStyles={{margin:'10px 0 0 0'}}
-              />
             </div>
-        
-
           </div>
-        </div>
-      ))
-    :null
-  )
+        ))
+      : null;
 
   return (
-    <div className='featured_container'>
-      <Slider {...settings}>
-        {
-          generateSlides()
-        }
-      </Slider>
-    </div>
+      <div className="featured_container">
+        <Slider {...settings}>{generateSlides()}</Slider>
+      </div>
+
   );
 };
 

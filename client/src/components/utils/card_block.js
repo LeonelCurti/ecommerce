@@ -7,10 +7,15 @@ const CardBlock = props => {
     props.list ? props.list.map((card, i) => <Card key={i} {...card} />) : null;
 
   return (
-    <div className="card_block">
+    <section className="card_block">
       <Container>
-        {props.title ? <div className="title">{props.title}</div> : null}
+        {
+          props.title 
+          ? <div className="title">{props.title}</div> 
+          : null
+        }
         <div
+          className='primordial'
           style={{
             display: "flex",
             flexWrap: "wrap"
@@ -19,7 +24,7 @@ const CardBlock = props => {
           {renderCards()}
         </div>
       </Container>
-    </div>
+    </section>
   );
 };
 

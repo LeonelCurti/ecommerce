@@ -279,10 +279,10 @@ class AddProducts extends Component {
 
   render() {
     return (
-      <div>
+      <div >
         <UserLayout>
           <div>
-            <h1>Agregar Producto</h1>
+            <h1>Add Product</h1>
             <form onSubmit={e => this.submitForm(e)}>
 
               <FileUpload 
@@ -347,7 +347,7 @@ class AddProducts extends Component {
                 </div>
               ) : null}
 
-              <button onClick={this.submitForm}>Add product</button>
+              <button className='btn btn-primary' onClick={this.submitForm}>Add product</button>
             </form>
           </div>
         </UserLayout>

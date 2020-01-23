@@ -1,6 +1,6 @@
 import React from "react";
 import MyButton from "../utils/button";
-import './home_promotion.css'
+
 
 const HomePromotion = props => {
   const promotion = {

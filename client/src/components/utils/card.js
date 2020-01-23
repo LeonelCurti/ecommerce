@@ -1,9 +1,15 @@
 import React, { Component } from "react";
 import MyButton from "./button";
-import { connect } from 'react-redux'
-import { addToCart } from '../../actions/user_actions'
+import { connect } from "react-redux";
+import { addToCart } from "../../actions/user_actions";
+import Modal from 'react-bootstrap/Modal';
 
 class Card extends Component {
+
+  state={
+    showModal: false
+  }
+
   renderCardImage = images => {
     if (images.length > 0) {
       return images[0].url;
@@ -28,55 +34,65 @@ class Card extends Component {
             <div className="name">{props.name}</div>
             <div className="price">${props.price}</div>
           </div>
-        
-        {
-          props.grid ? 
-          (
-          <div className="description">
-            <p>{ props.description }</p>
+
+          {props.grid ? (
+            <div className="description">
+              <p>{props.description}</p>
+            </div>
+          ) : null}
+          <div className="actions">
+            <div className="button_wrapp">
+              <MyButton
+                type="default"
+                altClass="card_link"
+                title="View product"
+                linkTo={`/product_detail/${props._id}`}
+                addStyle={{
+                  margin: "10px 0 0 0"
+                }}
+              />
+            </div>
+            <div className="button_wrapp">
+              <MyButton
+                type="bag_link"
+                runAction={() => {
+                  props.user.userData.isAuth
+                    ? this.props.dispatch(addToCart(props._id))
+                    : this.setState({showModal:true});
+                }}
+                altClass="card_link"
+                title="View product"
+                linkTo={`/product_detail/${props._id}`}
+                addStyle={{
+                  margin: "10px 0 0 0"
+                }}
+              />
+
+              <Modal
+                size="sm"
+                show={this.state.showModal}
+                onHide={() => this.setState({showModal:false})}
+                aria-labelledby="example-modal-sizes-title-sm"
+              >
+                <Modal.Header closeButton>
+                  <Modal.Title id="example-modal-sizes-title-sm">
+                    Aviso
+                  </Modal.Title>
+                </Modal.Header>
+                <Modal.Body>Para agregar a la cesta debe iniciar sesión.</Modal.Body>
+              </Modal>
+
+            </div>
           </div>
-          ) 
-          : null
-        }
-        <div className="actions">
-          <div className="button_wrapp">
-            <MyButton
-              type="default"
-              altClass="card_link"
-              title="View product"
-              linkTo={`/product_detail/${props._id}`}
-              addStyle={{
-                margin: "10px 0 0 0"
-              }}
-            />
-          </div>
-          <div className="button_wrapp">            
-            <MyButton
-              type="bag_link"
-              runAction={() => {
-                props.user.userData.isAuth
-                ? this.props.dispatch(addToCart(props._id))
-                :console.log('you need to login');
-                
-              }}
-              altClass="card_link"
-              title="View product"
-              linkTo={`/product_detail/${props._id}`}
-              addStyle={{
-                margin: "10px 0 0 0"
-              }}
-            />
-          </div>
-        </div>
         </div>
       </div>
     );
   }
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     user: state.user
-  }
-}
+  };
+};
 
 export default connect(mapStateToProps)(Card);

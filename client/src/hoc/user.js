@@ -1,15 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import Container from "react-bootstrap/Container";
 
-const generalLinks = [
+
+const generalLinks = [  
   {
-    name: "My account",
-    linkTo: "/user/dashboard"
-  },
-  {
-    name: "Info de usuario",
+    name: "User info",
     linkTo: "/user/user_profile"
   },
   {
@@ -20,15 +16,15 @@ const generalLinks = [
 
 const adminLinks = [
   {
-    name: "Info del sitio",
+    name: "Site info",
     linkTo: "/admin/site_info"
   },
   {
-    name: "Agregar producto",
+    name: "Add product",
     linkTo: "/admin/add_product"
   },
   {
-    name: "Categorias",
+    name: "Categories",
     linkTo: "/admin/manage_categories"
   }
 ];
@@ -36,27 +32,37 @@ const adminLinks = [
 const UserLayout = props => {
   const generateLinks = links =>
     links.map((item, i) => (
-      <Link to={item.linkTo} key={i}>
+      <Link className="btn btn-secondary" to={item.linkTo} key={i}>
         {item.name}
       </Link>
     ));
 
   return (
-    <Container>
-      <div className="user_container">
-        <div className="user_left_nav">
-          <h2>Mi cuenta</h2>
-          <div className="links">{generateLinks(generalLinks)}</div>
-          {props.user.userData.isAdmin ? (
-            <div>
-              <h2>Administrar</h2>
-              <div className="links">{generateLinks(adminLinks)}</div>
-            </div>
-          ) : null}
-        </div>
-        <div className="user_right">{props.children}</div>
+    
+    <div className='container'>
+      <div className="user_container row">
+       
+          <div className="user_left_nav text-center col-sm-3">
+            <h2>My account</h2>
+            <div class="btn-group-vertical w-100">
+              {generateLinks(generalLinks)}
+            </div>            
+            {
+              props.user.userData.isAdmin ? (
+                <div pt-3>
+                  <h2>Admin</h2>
+                  <div class="btn-group-vertical w-100">
+                    {generateLinks(adminLinks)}
+                  </div>                  
+                </div>
+              ) : null
+            }
+          </div>
+          <div className="user_right col-sm-9">{props.children}</div>
+       
       </div>
-    </Container>
+    </div>      
+    
   );
 };
 

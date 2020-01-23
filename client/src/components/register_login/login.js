@@ -63,7 +63,7 @@ class Login extends Component {
       <Container>
         <div
           style={{
-            padding: "2.5rem 0"
+            padding: "4.5rem 0"
           }}
         >
           <Form
@@ -102,7 +102,7 @@ class Login extends Component {
               className='mt-4'              
               block              
               variant={!this.validateForm()? 'dark': 'primary'}
-              disabled={!this.validateForm()}
+              // disabled={!this.validateForm()}
               type="submit"
             >
               Login

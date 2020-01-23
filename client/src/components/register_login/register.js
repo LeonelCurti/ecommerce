@@ -115,7 +115,7 @@ class Register extends Component {
       <Container>
         <div
           style={{
-            padding: "2rem 0"
+            padding: "4.5rem 0"
           }}
         >
           <Form
@@ -127,7 +127,7 @@ class Register extends Component {
             >
             <h2 className="text-center">Register</h2>
             <Form.Group controlId="name">
-              <Form.Label>Nombre</Form.Label>
+              <Form.Label>Name</Form.Label>
               <Form.Control
                 // autoFocus
                 required
@@ -137,7 +137,7 @@ class Register extends Component {
               />
             </Form.Group>
             <Form.Group controlId="lastName">
-              <Form.Label>Apellido</Form.Label>
+              <Form.Label>Last Name</Form.Label>
               <Form.Control
                 required
                 type="text"
@@ -155,7 +155,7 @@ class Register extends Component {
               />
             </Form.Group>
             <Form.Group controlId="password">
-              <Form.Label>Contraseña</Form.Label>
+              <Form.Label>Password</Form.Label>
               <Form.Control
                 required
                 value={this.state.password}
@@ -163,7 +163,7 @@ class Register extends Component {
                 type="password"
               />
               <Form.Text className="text-muted">
-                La contraseña debe contener 5 o más caracteres.
+                Password must be 5 or more characters.                
               </Form.Text>
             </Form.Group>
             {this.state.registerSuccess && (
@@ -173,7 +173,7 @@ class Register extends Component {
                   animation="border"
                   variant="success"
                 />
-                <span>Redirigiendo al login</span>
+                <span>Redirect to login</span>
               </Alert>
             )}
             {this.state.formError && (
@@ -182,7 +182,7 @@ class Register extends Component {
             <Button
               block
               variant={!this.validateForm() ? "dark" : "primary"}
-              disabled={!this.validateForm()}
+              // disabled={!this.validateForm()}
               type="submit"
             >
               Register
