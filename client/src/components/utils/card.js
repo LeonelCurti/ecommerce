@@ -76,10 +76,10 @@ class Card extends Component {
               >
                 <Modal.Header closeButton>
                   <Modal.Title id="example-modal-sizes-title-sm">
-                    Aviso
+                    Warning
                   </Modal.Title>
                 </Modal.Header>
-                <Modal.Body>Para agregar a la cesta debe iniciar sesión.</Modal.Body>
+                <Modal.Body>You must be logged in to add items.</Modal.Body>
               </Modal>
 
             </div>

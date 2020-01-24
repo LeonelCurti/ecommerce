@@ -44,14 +44,14 @@ const UserLayout = props => {
        
           <div className="user_left_nav text-center col-sm-3">
             <h2>My account</h2>
-            <div class="btn-group-vertical w-100">
+            <div className="btn-group-vertical w-100">
               {generateLinks(generalLinks)}
             </div>            
             {
               props.user.userData.isAdmin ? (
-                <div pt-3>
+                <div className='pt-3'>
                   <h2>Admin</h2>
-                  <div class="btn-group-vertical w-100">
+                  <div className="btn-group-vertical w-100">
                     {generateLinks(adminLinks)}
                   </div>                  
                 </div>

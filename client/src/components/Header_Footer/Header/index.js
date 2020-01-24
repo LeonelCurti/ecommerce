@@ -1,9 +1,8 @@
 import React, { Component } from "react";
-import { Link, withRouter } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { logoutUser } from "../../../actions/user_actions";
 import { LinkContainer } from "react-router-bootstrap";
-
 import { Nav, Navbar, Container } from "react-bootstrap";
 
 class Header extends Component {
@@ -13,17 +12,12 @@ class Header extends Component {
         this.props.history.push("/");
       }
     });
-  };
-  // PONER INDICADOR DE ELEMENTOS EN MY CART
-  cartLink = (item, i) => {
+  }; 
+
+  cartItemCount = ()=>{
     const user = this.props.user.userData;
-    return (
-      <div className="cart_link" key={i}>
-        <span>{user.cart ? user.cart.length : 0}</span>
-        <Link to={item.linkTo}>{item.name}</Link>
-      </div>
-    );
-  };
+    return user.cart ? user.cart.length : 0
+  }
 
   render() {   
     
@@ -59,7 +53,7 @@ class Header extends Component {
               {this.props.user.userData.isAuth ? (
                 <React.Fragment>
                   <LinkContainer to="/user/cart">
-                    <Nav.Link>CART</Nav.Link>
+                    <Nav.Link><span className='badge badge-warning' id='lblCartCount'> {this.cartItemCount()} </span>CART</Nav.Link>
                   </LinkContainer>
 
                   <LinkContainer to="/user/logout">

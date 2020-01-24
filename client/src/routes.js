@@ -10,6 +10,7 @@ import Register from "./components/register_login/register";
 import Shop from './components/Shop'
 import ProductPage from './components/Product'
 
+
 import UserDashboard from "./components/User/index";
 import AddProducts from "./components/User/Admin/add_products";
 import ManageCategories from './components/User/Admin/manage_categories'

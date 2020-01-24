@@ -6,6 +6,28 @@ html {
   html {
     font-size: 1rem;
   }
+  
+}
+@media (max-width: 576px) {
+  
+  .product_detail_wrapper .product_actions .cart {
+    
+    margin:0 auto;
+  }
+  .product_detail_wrapper .product_actions .price {
+    margin: 0 auto;
+  }
+
+  .product_detail_wrapper .main_pic div {
+ 
+    height: 300px;
+    
+  }.product_detail_wrapper .main_thumbs .thumb {
+    
+    height: 150px;
+
+  }
+  
 }
 
 @media (min-width: 768px) {
