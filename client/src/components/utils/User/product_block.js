@@ -1,53 +1,35 @@
 import React from 'react'
 
 const UserProductBlock = ({products, type, removeItem}) => {
-
-  const renderCartImage = (images) =>{
-    if (images.length > 0) {
-      return images[0].url
-    }else {
-      return '/images/image_not_availble.png'
-    }
-  }
-
-
   const renderItems = ()=>(
     products.cartDetail
     ?products.cartDetail.map(product=>(
       <div 
-        className="user_product_block"
+        className="user_product_block row text-center"
         key={product._id}
-        >
-        <div className="item">
-          <div 
-            className="image"
-            style={{background: `url(${renderCartImage(product.images)}) no-repeat`}}
-          ></div>
-        </div>
-        <div className="item">
-          <h4>Product name</h4>
+        >   
+        <div className="item col-sm">
+          <h4>Product</h4>
           <div>
             {product.brand.name} {product.name}
           </div>
         </div>
-        <div className="item">
+        <div className="item col-sm">
           <h4>Quantity</h4>
           <div>
             {product.quantity}
           </div>
         </div>
-        <div className="item">
+        <div className="item col-sm">
           <h4>Price</h4>
           <div>
             {product.price}
           </div>
         </div>
-        <div className='item btn'>
-          <div className="cart_remove_btn"
+        <div className='item col-sm'>
+          <button className="btn btn-danger"
           onClick={()=>removeItem(product._id)}
-          >
-            Remove
-          </div>
+          >X</button>         
         </div>
       </div>
     ))

@@ -1,9 +1,10 @@
 import React from "react";
 import CardBlockShop from "../utils/card_block_shop";
-const LoadMoreCards = props => {
- 
+
+
+const LoadMoreCards = props => { 
   return (
-    <div>
+    <React.Fragment>
       <CardBlockShop grid={props.grid} list={props.products} />
 
       {
@@ -13,7 +14,8 @@ const LoadMoreCards = props => {
           </div>
         ) : null
       }
-    </div>
+    </React.Fragment>
+  
   );
 };
 

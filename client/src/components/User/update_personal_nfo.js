@@ -96,14 +96,17 @@ class UpdatePersonalNfo extends Component {
         <Form
           style={{
             margin: "0 auto",
-            maxWidth: "320px"
+            maxWidth: "320px"          
           }}
           onSubmit={this.submitForm}
         >
-          <h3 className="text-center">Update User</h3>
+          <div className='user_block_info'>
+            <h3 className="text-center">User information</h3>
+            <h5>Edit personal data:</h5>
+          </div>
           <Form.Group controlId="name">
             <Form.Label>Name</Form.Label>
-            <Form.Control
+            <Form.Control              
               required
               type="text"
               value={this.state.name}

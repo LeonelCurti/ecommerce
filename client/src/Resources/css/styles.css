@@ -392,9 +392,7 @@ select {
 }
 
 .card_block_shop .card_item_wrapper {
-  float: left;
-  width: 33.3%;
-  margin-bottom: 20px;
+   margin-bottom: 20px;
 }
 
 /*============================
@@ -517,21 +515,9 @@ select {
         SHOP
 ==============================*/
 
-.shop_wrapper {
-  display: flex;
-}
-
-.shop_wrapper .left {
-  flex-grow: 1;
-}
-
-.shop_wrapper .right {
-  width: 800px;
-}
-
 .collapse_title span {
   text-transform: uppercase;
-  font-weight: 700;
+  font-weight: 500;
 }
 
 .grid_btn {
@@ -715,21 +701,14 @@ select {
 
 .user_container .user_nfo_panel span {
   display: block;
-  font-size: 18px;
-  font-weight: 300;
+  font-size: 1rem;  
 }
 
 .user_product_block {
-  display: flex;
-  flex-wrap: wrap;
-  background: white;
+  /* background: white; */
   padding: 10px;
   margin-bottom: 10px;
   border: 1px solid #ebebeb;
-}
-
-.user_product_block .item {
-  flex-grow: 1;
 }
 
 .user_product_block .item .image {
@@ -740,7 +719,7 @@ select {
   margin-right: 10px;
 }
 .user_product_block .item.btn {
-  width: 0px;
+  /* width: 0px; */
 }
 
 .user_product_block .cart_remove_btn {

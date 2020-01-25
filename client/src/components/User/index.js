@@ -1,30 +1,20 @@
 import React from "react";
 import UserLayout from "../../hoc/user";
-import MyButton from "../utils/button";
+import { Link } from "react-router-dom";
 
-const UserDashboard = ({user}) => {
+const UserDashboard = ({ user }) => {
   return (
     <UserLayout>
-      <div>
-        <div className="user_nfo_panel">
-          <h1>Informacion Personal</h1>
-          <div>
-            <span>{user.userData.name}</span>
-            <span>{user.userData.lastname}</span>
-            <span>{user.userData.email}</span>
-          </div>
-          <MyButton
-            type="default"
-            title="Editar cuenta"
-            linkTo="/user/user_profile"
-          />
-        </div>
-        <div className="user_nfo_panel">
-          <h1>Historial de compras</h1>
-          <div className="user_product_block_wrapper">
-            Historial
-          </div>
-        </div>
+      <div className="user_nfo_panel text-center">
+        <h2>Personal Information</h2>
+        <div>
+          <span>Name: {user.userData.name}</span>
+          <span>Last Name: {user.userData.lastname}</span>
+          <span>Email: {user.userData.email}</span>
+        </div>        
+        <Link to="/user/user_profile" className="btn btn-primary mt-2">
+          Edit
+        </Link>
       </div>
     </UserLayout>
   );

@@ -107,11 +107,11 @@ class Shop extends Component {
       <Container>
         <PageTop title="Browse Products" />
 
-        <div>
-          <div className="shop_wrapper">
-            <div className="left">
+       
+          <div className="row">
+            <div className="col-sm-3">
               <CollapseCheckbox
-                initState={true}
+                initState={false}
                 title="Brands"
                 list={products.brands}
                 handleFilters={filters => this.handleFilters(filters, "brand")}
@@ -123,7 +123,7 @@ class Shop extends Component {
                 handleFilters={filters => this.handleFilters(filters, "frets")}
               />
               <CollapseCheckbox
-                initState={true}
+                initState={false}
                 title="Woods"
                 list={products.woods}
                 handleFilters={filters => this.handleFilters(filters, "wood")}
@@ -136,7 +136,7 @@ class Shop extends Component {
               />
             </div>
 
-            <div className="right">
+            <div className="col-sm-9">
               <div className="shop_options">
                 <div className="shop_grids clear">
                   <div
@@ -162,7 +162,7 @@ class Shop extends Component {
               />
             </div>
           </div>
-        </div>
+       
       </Container>
     );
   }
