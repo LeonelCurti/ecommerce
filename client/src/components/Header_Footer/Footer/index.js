@@ -34,7 +34,7 @@ const Footer = () => {
               <div className="col-sm-4">
                 <div className="single-contact text-center text-white">
                   <FontAwesomeIcon icon={faMapMarkerAlt} className="icon" />
-                  <h4>Adress</h4>
+                  <h4>Address</h4>
                   <p>Medreva 819</p>
                 </div>
               </div>              
@@ -56,7 +56,7 @@ const Footer = () => {
             <div className="text-white footer-wrapper">
               <div className="text-center">
                 <p className="copyright pb-0">
-                  2020 © Black Hawk. Develop by{" "}
+                  2020 © Black Hawk. Developed by{" "}
                   <a href="https://www.twitter.com/leomcurti">Leonel</a>
                 </p>
               </div>

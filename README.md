@@ -1,9 +1,9 @@
 ## BLACK HAWK ECOMMERCE APP
 -------------------------------------------------
 * Github: https://github.com/LeonelCurti/ecommerce
-* Heroku: https://.herokuapp.com/
+* Heroku: https://blackhawkecommerce.herokuapp.com/
 
-### Quick View
+
 
 
 
