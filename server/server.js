@@ -237,7 +237,7 @@ app.get("/api/users/removeFromCart", auth, (req, res) => {
 const port = process.env.PORT || 3002;
 
 mongoose
-  .connect(process.env.DATABASE, {
+  .connect(process.env.mongoURI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true,
