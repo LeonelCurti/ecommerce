@@ -5,6 +5,7 @@ const dotenv = require("dotenv");
 const mongoose = require("mongoose");
 const formidable = require("express-formidable");
 const cloudinary = require("cloudinary");
+const path = require("path");
 const app = express();
 
 //models
@@ -21,6 +22,7 @@ dotenv.config();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cookieParser());
+app.use(express.static("client/build"));
 
 cloudinary.config({
   cloud_name: process.env.CLOUD_NAME,
@@ -28,20 +30,17 @@ cloudinary.config({
   api_secret: process.env.CLOUD_API_SECRET
 });
 
-
 //-----BRANDS--------------------
 
-app.use('/api/product/brands', require('./routes/brands'));
+app.use("/api/product/brands", require("./routes/brands"));
 
 //-----WOODS---------------------
 
-app.use('/api/product/woods', require('./routes/woods'));
+app.use("/api/product/woods", require("./routes/woods"));
 
 //-----PRODUCTS------------------
 
-app.use('/api/product/shop', require('./routes/shop'));
-
-
+app.use("/api/product/shop", require("./routes/shop"));
 
 //BY ARRIVAL
 //articles?sortBy=createdAt&order=desc&limit=4
@@ -106,16 +105,13 @@ app.post("/api/product/article", auth, admin, (req, res) => {
 //-----USERS---------------------
 //-------------------------------
 
+app.use("/api/users", require("./routes/users/auth"));
 
-app.use('/api/users', require('./routes/users/auth'));
+app.use("/api/users", require("./routes/users/register"));
 
-app.use('/api/users', require('./routes/users/register'));
+app.use("/api/users", require("./routes/users/logout"));
 
-app.use('/api/users', require('./routes/users/logout'));
-
-app.use('/api/users', require('./routes/users/login'));
-
-
+app.use("/api/users", require("./routes/users/login"));
 
 app.post("/api/users/uploadimage", auth, admin, formidable(), (req, res) => {
   cloudinary.uploader.upload(
@@ -233,6 +229,13 @@ app.get("/api/users/removeFromCart", auth, (req, res) => {
   );
 });
 
+//DEFAULT ROUTE
+
+if (process.env.NODE_ENV === "production") {
+  app.get("/*", (req, res) => {
+    res.sendfile(path.resolve(__dirname, "../client", "build", "index.html"));
+  });
+}
 
 const port = process.env.PORT || 3002;
 
@@ -244,9 +247,6 @@ mongoose
     useFindAndModify: false
   })
   .then(result => {
-    app.listen(
-      port, 
-      () => console.log(`Server running at port ${port}`)
-    )
+    app.listen(port, () => console.log(`Server running at port ${port}`));
   })
-  .catch(err => console.log(err))
+  .catch(err => console.log(err));
