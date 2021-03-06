@@ -1,5 +1,4 @@
 const express = require("express");
-const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const dotenv = require("dotenv");
 const mongoose = require("mongoose");
@@ -7,27 +6,29 @@ const formidable = require("express-formidable");
 const cloudinary = require("cloudinary");
 const path = require("path");
 const app = express();
+const connectDB = require("./config/db");
+dotenv.config();
 
 //models
 const { User } = require("./models/user");
 const { Product } = require("./models/product");
 
+//Connect DB
+connectDB();
+
 //middlewares
 const { auth } = require("./middleware/auth");
 const { admin } = require("./middleware/admin");
 
-dotenv.config();
-
 //Init middlewares
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
+app.use(express.json({ extended: false }));
 app.use(cookieParser());
 app.use(express.static("client/build"));
 
 cloudinary.config({
   cloud_name: process.env.CLOUD_NAME,
   api_key: process.env.CLOUD_API_KEY,
-  api_secret: process.env.CLOUD_API_SECRET
+  api_secret: process.env.CLOUD_API_SECRET,
 });
 
 //-----BRANDS--------------------
@@ -75,7 +76,7 @@ app.get("/api/product/articles_by_id", (req, res) => {
   if (type === "array") {
     let ids = items.split(",");
     items = [];
-    items = ids.map(item => {
+    items = ids.map((item) => {
       return mongoose.Types.ObjectId(item);
     });
   }
@@ -96,7 +97,7 @@ app.post("/api/product/article", auth, admin, (req, res) => {
     if (err) return res.json({ success: false, err });
     res.status(200).json({
       success: true,
-      product: doc
+      product: doc,
     });
   });
 });
@@ -116,16 +117,16 @@ app.use("/api/users", require("./routes/users/login"));
 app.post("/api/users/uploadimage", auth, admin, formidable(), (req, res) => {
   cloudinary.uploader.upload(
     req.files.file.path,
-    result => {
+    (result) => {
       console.log(result);
       res.status(200).send({
         public_id: result.public_id,
-        url: result.url
+        url: result.url,
       });
     },
     {
       public_id: `${Date.now()}`,
-      resource_type: "auto"
+      resource_type: "auto",
     }
   );
 });
@@ -142,13 +143,13 @@ app.post("/api/users/update_profile", auth, (req, res) => {
   User.findOneAndUpdate(
     { _id: req.user._id },
     {
-      $set: req.body
+      $set: req.body,
     },
     { new: true },
     (err, doc) => {
       if (err) return res.json({ success: false, err });
       return res.status(200).send({
-        success: true
+        success: true,
       });
     }
   );
@@ -162,7 +163,7 @@ app.post("/api/users/addToCart", auth, (req, res) => {
   User.findOne({ _id: req.user._id }, (err, doc) => {
     let duplicate = false;
 
-    doc.cart.forEach(item => {
+    doc.cart.forEach((item) => {
       if (item.id == req.query.productId) {
         duplicate = true;
       }
@@ -172,7 +173,7 @@ app.post("/api/users/addToCart", auth, (req, res) => {
       User.findOneAndUpdate(
         {
           _id: req.user._id,
-          "cart.id": mongoose.Types.ObjectId(req.query.productId)
+          "cart.id": mongoose.Types.ObjectId(req.query.productId),
         },
         { $inc: { "cart.$.quantity": 1 } },
         { new: true },
@@ -190,9 +191,9 @@ app.post("/api/users/addToCart", auth, (req, res) => {
             cart: {
               id: mongoose.Types.ObjectId(req.query.productId),
               quantity: 1,
-              date: Date.now()
-            }
-          }
+              date: Date.now(),
+            },
+          },
         },
         //get the doc back
         { new: true }, //return de new not the previews
@@ -212,7 +213,7 @@ app.get("/api/users/removeFromCart", auth, (req, res) => {
     { new: true },
     (err, doc) => {
       let cart = doc.cart;
-      let array = cart.map(item => {
+      let array = cart.map((item) => {
         return mongoose.Types.ObjectId(item.id);
       });
 
@@ -222,7 +223,7 @@ app.get("/api/users/removeFromCart", auth, (req, res) => {
         .exec((err, cartDetail) => {
           return res.status(200).json({
             cartDetail,
-            cart
+            cart,
           });
         });
     }
@@ -232,21 +233,29 @@ app.get("/api/users/removeFromCart", auth, (req, res) => {
 //DEFAULT ROUTE
 
 if (process.env.NODE_ENV === "production") {
-  app.get("/", (req, res) => {
+  app.get("*", (req, res) => {
     res.sendFile(path.resolve(__dirname, "../client", "build", "index.html"));
   });
 }
 
 const port = process.env.PORT || 3002;
 
-mongoose
-  .connect(process.env.mongoURI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useCreateIndex: true,
-    useFindAndModify: false
-  })
-  .then(result => {
-    app.listen(port, () => console.log(`Server running at port ${port}`));
-  })
-  .catch(err => console.log(err));
+const server = app.listen(port, () => {
+  console.log(
+    `Server running in ${process.env.NODE_ENV} mode at port ${port} `
+  );
+});
+
+process.on("unhandledRejection", (err, promise) => {
+  console.log("Unhandled rejection at ", promise, `reason: ${err.message}`);
+  server.close(() => {
+    process.exit(0);
+  });
+});
+
+process.on("uncaughtException", (err) => {
+  console.log(`Uncaught Exception: ${err.message}`);
+  server.close(() => {
+    process.exit(0);
+  });
+});
