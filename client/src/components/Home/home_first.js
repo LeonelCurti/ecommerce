@@ -1,9 +1,11 @@
 import React, { Component } from "react";
+import background from "../../assets/bg-home.png"
+
 
 class HomeFirst extends Component {
   render() {
     return (
-      <section className="bg-home" id="home">
+      <section className="bg-home" style={{ backgroundImage: `url(${background})` }} id="home">
         <div className="home-center">
           <div className="home-desc-center">
             <div className="container">

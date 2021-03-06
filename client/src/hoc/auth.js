@@ -4,7 +4,7 @@ import { auth } from "../actions/user_actions";
 import Spinner from 'react-bootstrap/Spinner'
 
 // composedclass is the componet that we will render if //everything is ok
-export default function(ComposedClass, reload, adminRoute = null) {
+ function authHoc(ComposedClass, reload, adminRoute = null) {
   class AuthenticationCheck extends Component {
     _isMounted = false;
     state = {
@@ -57,3 +57,5 @@ export default function(ComposedClass, reload, adminRoute = null) {
 
   return connect(mapStateToProps)(AuthenticationCheck);
 }
+
+export default authHoc;

@@ -122,7 +122,7 @@ tr:nth-child(even) {
 
 .bg-home {
   position: relative;
-  background-image: url("/images/bg-home.png");
+  /* background-image: url("../assets/bg-home.png"); */
   background-color: #1f2d4e;
   padding: 220px 0px 180px 0px;
   height: 100vh;
@@ -718,9 +718,7 @@ select {
   background-position: center center !important;
   margin-right: 10px;
 }
-.user_product_block .item.btn {
-  /* width: 0px; */
-}
+
 
 .user_product_block .cart_remove_btn {
   cursor: pointer;
