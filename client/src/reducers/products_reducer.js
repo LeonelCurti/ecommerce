@@ -2,12 +2,12 @@ import {
   GET_PRODUCTS_BY_ARRIVAL,
   GET_PRODUCTS_BY_SELL,
   GET_BRANDS,
-  GET_WOODS,
+  GET_CATEGORIES,
   GET_PRODUCTS_TO_SHOP,
   ADD_PRODUCT,
   CLEAR_PRODUCT,
   ADD_BRAND,
-  ADD_WOOD,
+  ADD_CATEGORY,
   GET_PRODUCT_DETAIL,
   //to clear global redux state
   //prevent flashing the older state in screen
@@ -23,8 +23,8 @@ const productsReducer = (state = INITIAL_STATE, action) => {
       return { ...state, byArrival: action.payload };
     case GET_BRANDS:
       return { ...state, brands: action.payload };
-    case GET_WOODS:
-      return { ...state, woods: action.payload };
+    case GET_CATEGORIES:
+      return { ...state, categories: action.payload };
     case GET_PRODUCTS_TO_SHOP:
       return {
         ...state,
@@ -41,11 +41,11 @@ const productsReducer = (state = INITIAL_STATE, action) => {
         addBrand: action.payload.success,
         brands: action.payload.brands 
       };
-    case ADD_WOOD:
+    case ADD_CATEGORY:
       return { 
         ...state, 
-        addWood: action.payload.success,
-        woods: action.payload.woods 
+        addCategory: action.payload.success,
+        categories: action.payload.categories 
       };
     case GET_PRODUCT_DETAIL:
       return { 

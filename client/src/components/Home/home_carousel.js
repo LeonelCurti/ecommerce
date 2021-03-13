@@ -5,13 +5,11 @@ import { Link } from "react-router-dom";
 class HomeCarousel extends Component {
   state = {
     index: 0,
-    direction: null
   };
 
   handleSelect = (selectedIndex, e) => {
     this.setState({
       index: selectedIndex,
-      direction: e.direction
     });
   };
 
@@ -21,7 +19,6 @@ class HomeCarousel extends Component {
         <Carousel
           onSelect={this.handleSelect}
           activeIndex={this.state.index}
-          direction={this.state.direction}
           interval={3000}
         >
           <Carousel.Item>

@@ -31,14 +31,10 @@ const productSchema = mongoose.Schema({
     required: true,
     type: Boolean
   },
-  wood: {
+  category: {
     required: true,
     type: Schema.Types.ObjectId,
-    ref: "Wood"
-  },
-  frets: {
-    required: true,
-    type: Number
+    ref: "Category"
   },
   sold: {
     type: Number,

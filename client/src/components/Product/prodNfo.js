@@ -77,14 +77,10 @@ class ProdNfo extends React.Component {
   showProdSpecifications = detail => (
     <div className="product_specifications">
       <h2>Specs:</h2>
-      <div>
+      <div>     
         <div className="item">
-          <strong>Frets: </strong>
-          {detail.frets}
-        </div>
-        <div className="item">
-          <strong>Woods: </strong>
-          {detail.wood.name}
+          <strong>Category: </strong>
+          {detail.category.name}
         </div>
       </div>
     </div>

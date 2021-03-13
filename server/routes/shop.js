@@ -30,7 +30,7 @@ router.post("/", (req, res) => {
 
   Product.find(findArgs)
     .populate("brand")
-    .populate("wood")
+    .populate("category")
     .sort([[sortBy, order]])
     .skip(skip)
     .limit(limit)

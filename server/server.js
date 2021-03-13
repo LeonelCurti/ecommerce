@@ -35,9 +35,9 @@ cloudinary.config({
 
 app.use("/api/product/brands", require("./routes/brands"));
 
-//-----WOODS---------------------
+//-----CATEGORIES---------------------
 
-app.use("/api/product/woods", require("./routes/woods"));
+app.use("/api/product/categories", require("./routes/categories"));
 
 //-----PRODUCTS------------------
 
@@ -56,7 +56,7 @@ app.get("/api/product/articles", (req, res) => {
 
   Product.find()
     .populate("brand")
-    .populate("wood")
+    .populate("category")
     .sort([[sortBy, order]])
     .limit(limit)
     .exec((err, docs) => {
@@ -83,7 +83,7 @@ app.get("/api/product/articles_by_id", (req, res) => {
 
   Product.find({ _id: { $in: items } })
     .populate("brand")
-    .populate("wood")
+    .populate("category")
     .exec((err, docs) => {
       if (err) return res.status(400).send(err);
       return res.status(200).send(docs);
@@ -219,7 +219,7 @@ app.get("/api/users/removeFromCart", auth, (req, res) => {
 
       Product.find({ _id: { $in: array } })
         .populate("brand")
-        .populate("wood")
+        .populate("category")
         .exec((err, cartDetail) => {
           return res.status(200).json({
             cartDetail,

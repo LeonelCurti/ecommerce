@@ -12,7 +12,7 @@ import {
 import FileUpload from '../../utils/Form/fileUpload';
 
 import { connect } from "react-redux";
-import { getBrands, getWoods, addProduct, clearProduct  } from "../../../actions/product_actions";
+import { getBrands, getCategories, addProduct, clearProduct  } from "../../../actions/product_actions";
 
 class AddProducts extends Component {
   state = {
@@ -124,34 +124,13 @@ class AddProducts extends Component {
         validationMessage: "",
         showlabel: true
       },
-      wood: {
+      category: {
         element: "select",
         value: "",
         config: {
-          label: "Wood material",
-          name: "wood_input",
+          label: "Category",
+          name: "category_input",
           options: []
-        },
-        validation: {
-          required: true
-        },
-        valid: false,
-        touched: false,
-        validationMessage: "",
-        showlabel: true
-      },
-      frets: {
-        element: "select",
-        value: "",
-        config: {
-          label: "Frets",
-          name: "frets_input",
-          options: [
-            { key: 20, value: 20 },
-            { key: 21, value: 21 },
-            { key: 22, value: 22 },
-            { key: 24, value: 24 }
-          ]
         },
         validation: {
           required: true
@@ -223,11 +202,11 @@ class AddProducts extends Component {
       );
       this.updateFields(newFormData);
     });
-    this.props.dispatch(getWoods()).then(response => {
+    this.props.dispatch(getCategories()).then(response => {
       const newFormData = populateOptionFields(
         formdata,
-        this.props.products.woods,
-        "wood"
+        this.props.products.categories,
+        "category"
       );
       this.updateFields(newFormData);
     });
@@ -322,15 +301,10 @@ class AddProducts extends Component {
               />
               <div className="form_devider"></div>
               <Formfield
-                id={"wood"}
-                formdata={this.state.formData.wood}
+                id={"category"}
+                formdata={this.state.formData.category}
                 change={element => this.updateForm(element)}
-              />
-              <Formfield
-                id={"frets"}
-                formdata={this.state.formData.frets}
-                change={element => this.updateForm(element)}
-              />
+              />          
               <div className="form_devider"></div>
               <Formfield
                 id={"publish"}

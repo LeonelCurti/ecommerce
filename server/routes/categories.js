@@ -1,31 +1,31 @@
 const express = require('express');
 const router = express.Router();
-const { Wood } = require("../models/wood");
+const { Category } = require("../models/category");
 const { auth } = require("../middleware/auth");
 const { admin } = require("../middleware/admin");
 
-//@route   POST api/product/woods
-//@desc    add wood
+//@route   POST api/product/categories
+//@desc    add category
 //@access  Private, Admin
 router.post("/", auth, admin, (req, res) => {
-  const wood = new Wood(req.body);
+  const category = new Category(req.body);
 
-  wood.save((err, doc) => {
+  category.save((err, doc) => {
     if (err) return res.json({ success: false, err });
     res.status(200).json({
       success: true,
-      wood: doc
+      category: doc
     });
   });
 });
 
-//@route   GET api/product/woods
-//@desc    get woods
+//@route   GET api/product/categories
+//@desc    get categories
 //@access  Public
 router.get("/", (req, res) => {
-  Wood.find({}, (err, woods) => {
+  Category.find({}, (err, categories) => {
     if (err) return res.status(400).send(err);
-    res.status(200).send(woods);
+    res.status(200).send(categories);
   });
 });
 

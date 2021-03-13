@@ -5,12 +5,12 @@ import { connect } from "react-redux";
 import {
   getProductsToShop,
   getBrands,
-  getWoods
+  getCategories
 } from "../../actions/product_actions";
 
 import CollapseCheckbox from "../utils/collapseCheckbox";
 import CollapseRadio from "../utils/collapseRadio";
-import { frets, prices } from "../utils/Form/fixed_categories";
+import { prices } from "../utils/Form/fixed_categories";
 
 import LoadMoreCards from "./loadMoreCards";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -24,15 +24,14 @@ class Shop extends Component {
     skip: 0,
     filters: {
       brand: [],
-      frets: [],
-      wood: [],
+      category: [],
       price: []
     }
   };
 
   componentDidMount() {
     this.props.dispatch(getBrands());
-    this.props.dispatch(getWoods());
+    this.props.dispatch(getCategories());
 
     this.props.dispatch(
       getProductsToShop(this.state.skip, this.state.limit, this.state.filters)
@@ -112,22 +111,16 @@ class Shop extends Component {
             <div className="col-sm-3">
               <CollapseCheckbox
                 initState={false}
-                title="Brands"
+                title="Category"
+                list={products.categories}
+                handleFilters={filters => this.handleFilters(filters, "category")}
+              />
+              <CollapseCheckbox
+                initState={false}
+                title="Brand"
                 list={products.brands}
                 handleFilters={filters => this.handleFilters(filters, "brand")}
-              />
-              <CollapseCheckbox
-                initState={false}
-                title="Frets"
-                list={frets}
-                handleFilters={filters => this.handleFilters(filters, "frets")}
-              />
-              <CollapseCheckbox
-                initState={false}
-                title="Woods"
-                list={products.woods}
-                handleFilters={filters => this.handleFilters(filters, "wood")}
-              />
+              />       
               <CollapseRadio
                 initState={true}
                 title="Price"

@@ -3,12 +3,12 @@ import {
   GET_PRODUCTS_BY_ARRIVAL,
   GET_PRODUCTS_BY_SELL,
   GET_BRANDS,
-  GET_WOODS,
+  GET_CATEGORIES,
   GET_PRODUCTS_TO_SHOP,
   ADD_PRODUCT,
   CLEAR_PRODUCT,
   ADD_BRAND,
-  ADD_WOOD,
+  ADD_CATEGORY,
   GET_PRODUCT_DETAIL,
   //to clear global redux state
   //prevent flashing the older state in screen
@@ -109,12 +109,12 @@ export function getBrands() {
     payload: request
   };
 }
-export function getWoods() {
+export function getCategories() {
   const request = axios
-    .get(`${PRODUCT_SERVER}/woods`)
+    .get(`${PRODUCT_SERVER}/categories`)
     .then(response => response.data);
   return {
-    type: GET_WOODS,
+    type: GET_CATEGORIES,
     payload: request
   };
 }
@@ -136,20 +136,20 @@ export function addBrand(dataToSubmit, existingBrands){
     payload: request
   }
 }
-export function addWood(dataToSubmit, existingWoods){
-  const request = axios.post(`${PRODUCT_SERVER}/woods`,dataToSubmit)
+export function addCategory(dataToSubmit, existingCategories){
+  const request = axios.post(`${PRODUCT_SERVER}/categories`,dataToSubmit)
   .then((response)=>{
-    let woods = [
-      ...existingWoods,
-      response.data.wood
+    let categories = [
+      ...existingCategories,
+      response.data.category
     ];
     return {
       success: response.data.success,
-      woods
+      categories
     }
   })
   return {
-    type:ADD_WOOD,
+    type:ADD_CATEGORY,
     payload: request
   }
 }
