@@ -122,7 +122,7 @@ class Shop extends Component {
                 handleFilters={filters => this.handleFilters(filters, "brand")}
               />       
               <CollapseRadio
-                initState={true}
+                initState={false}
                 title="Price"
                 list={prices}
                 handleFilters={filters => this.handleFilters(filters, "price")}

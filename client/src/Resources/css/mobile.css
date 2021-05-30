@@ -6,6 +6,10 @@ html {
   html {
     font-size: 1rem;
   }
+ 
+  .card_block_shop .card_item_wrapper {
+    width: auto;    
+ }
   
 }
 @media (max-width: 576px) {
@@ -30,6 +34,9 @@ html {
   .user_block_info{
     padding-top: 3rem;
   }
+  .card_block_shop .card_item_wrapper {
+    width: auto;
+ }
   
   
 }
@@ -38,10 +45,16 @@ html {
   html {
     font-size: 1.1rem;
   }
+  .card_block_shop .card_item_wrapper {
+    flex-grow: 0;
+ } 
 }
 
 @media (min-width: 992px) {
   html {
     font-size: 1.2rem;
   }
+  .card_block_shop .card_item_wrapper {
+    flex-grow: 1;
+ } 
 }

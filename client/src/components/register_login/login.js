@@ -9,8 +9,8 @@ import Alert from "react-bootstrap/Alert";
 
 class Login extends Component {
   state = {
-    email: "",
-    password: "",
+    email: "client@test.com",
+    password: "12345",
     formError: false,    
   };
 

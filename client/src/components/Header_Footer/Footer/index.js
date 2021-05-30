@@ -13,17 +13,17 @@ const Footer = () => {
 
       <div className="container">
 
-        <div className="row justify-content-center pt-3">
+        <div className="row justify-content-center">
           <div className="col-md-8">
             <div className="text-center">
-              <h3 className="section-title text-white pt-4">Contact</h3>
+              <h3 className="section-title text-white pt-3">Contact</h3>
             </div>
           </div>
         </div>
 
         <div className="row justify-content-center">
           <div className="col-md-12 col-lg-10">
-            <div className="row mt-4">
+            <div className="row mt-1">
               <div className="col-sm-4">
                 <div className="single-contact text-center text-white">
                   <FontAwesomeIcon icon={faPhone} className="icon" />
@@ -51,7 +51,7 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className="row mt-3 pt-2 pb-2">
+        <div className="row mt-2 pt-2 ">
           <div className="col-md-12">
             <div className="text-white footer-wrapper">
               <div className="text-center">
