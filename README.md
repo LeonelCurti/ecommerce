@@ -35,7 +35,6 @@
 - axios
 - bootstrap
 - react
-- react-bootstrap
 - react-dom
 - react-dropzone
 - react-image-lightbox

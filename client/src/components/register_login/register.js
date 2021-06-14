@@ -1,12 +1,13 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { registerUser } from "../../actions/user_actions";
-
-import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
-import Container from "react-bootstrap/Container";
-import Alert from "react-bootstrap/Alert";
-import Spinner from "react-bootstrap/Spinner";
+import Container from "@material-ui/core/Container";
+import Typography from "@material-ui/core/Typography";
+import TextField from "@material-ui/core/TextField";
+import FormHelperText from "@material-ui/core/FormHelperText";
+import Button from "@material-ui/core/Button";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import Box from "@material-ui/core/Box";
 
 class Register extends Component {
   state = {
@@ -16,12 +17,11 @@ class Register extends Component {
     password: "",
     formError: false,
     registerSuccess: false,
-    errorMsg: ""
+    errorMsg: "",
   };
-
-  onChange = e => {
+  onChange = (e) => {
     this.setState({
-      [e.target.id]: e.target.value
+      [e.target.id]: e.target.value,
     });
   };
 
@@ -34,14 +34,14 @@ class Register extends Component {
     );
   }
 
-  submitForm = e => {
+  submitForm = (e) => {
     e.preventDefault();
 
     const dataToSubmit = {
       name: this.state.name.trim(),
       lastname: this.state.lastName.trim(),
       email: this.state.email.trim(),
-      password: this.state.password
+      password: this.state.password,
     };
 
     //validate data
@@ -63,10 +63,10 @@ class Register extends Component {
     ) {
       this.props
         .dispatch(registerUser(dataToSubmit))
-        .then(response => {
+        .then((response) => {
           if (response.payload.success) {
             this.setState({
-              registerSuccess: true
+              registerSuccess: true,
             });
             setTimeout(() => {
               this.props.history.push("/login");
@@ -74,37 +74,38 @@ class Register extends Component {
           } else {
             this.setState({
               formError: true,
-              errorMsg: response.payload.err
+              errorMsg: response.payload.err,
             });
             setTimeout(() => {
               this.setState({
                 formError: false,
-                errorMsg: ""
+                errorMsg: "",
               });
             }, 5000);
           }
         })
-        .catch(err => {
+        .catch((err) => {
+          console.log(err);
           this.setState({
             formError: true,
-            errorMsg: "Ha ocurrido un error, vuelva a intentarlo"
+            errorMsg: "Ha ocurrido un error, vuelva a intentarlo",
           });
           setTimeout(() => {
             this.setState({
               formError: false,
-              errorMsg: ""
+              errorMsg: "",
             });
           }, 5000);
         });
     } else {
       this.setState({
         formError: true,
-        errorMsg: "Revise la informacion ingresada y vuelva a intentar"
+        errorMsg: "Revise la informacion ingresada y vuelva a intentar",
       });
       setTimeout(() => {
         this.setState({
           formError: false,
-          errMsg: ""
+          errMsg: "",
         });
       }, 5000);
     }
@@ -112,82 +113,92 @@ class Register extends Component {
 
   render() {
     return (
-      <Container>
+      <Container maxWidth="xs">
         <div
           style={{
-            padding: "4.5rem 0"
+            margin: "5rem 0 7rem 0",
           }}
         >
-          <Form
-            style={{
-              margin: "0 auto",
-              maxWidth: "320px"
-            }}
-            onSubmit={this.submitForm}
-            >
-            <h2 className="text-center">Register</h2>
-            <Form.Group controlId="name">
-              <Form.Label>Name</Form.Label>
-              <Form.Control
-                // autoFocus
-                required
-                type="text"
-                value={this.state.name}
-                onChange={this.onChange}
-              />
-            </Form.Group>
-            <Form.Group controlId="lastName">
-              <Form.Label>Last Name</Form.Label>
-              <Form.Control
-                required
-                type="text"
-                value={this.state.lastName}
-                onChange={this.onChange}
-              />
-            </Form.Group>
-            <Form.Group controlId="email">
-              <Form.Label>Email</Form.Label>
-              <Form.Control
-                required
-                type="email"
-                value={this.state.email}
-                onChange={this.onChange}
-              />
-            </Form.Group>
-            <Form.Group controlId="password">
-              <Form.Label>Password</Form.Label>
-              <Form.Control
-                required
-                value={this.state.password}
-                onChange={this.onChange}
-                type="password"
-              />
-              <Form.Text className="text-muted">
-                Password must be 5 or more characters.                
-              </Form.Text>
-            </Form.Group>
-            {this.state.registerSuccess && (
-              <Alert variant="success">
-                <Spinner
-                  style={{ marginRight: "10px" }}
-                  animation="border"
-                  variant="success"
-                />
-                <span>Redirect to login</span>
-              </Alert>
-            )}
-            {this.state.formError && (
-              <Alert variant="danger">{this.state.errorMsg}</Alert>
-            )}            
+          <Typography component="h1" variant="h5" align="center">
+            Register
+          </Typography>
+          <form onSubmit={this.submitForm} style={{ marginTop: "1.2rem" }}>
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              id="name"
+              label="Name"
+              name="name"
+              autoComplete="name"
+              value={this.state.name}
+              onChange={this.onChange}
+            />
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              id="lastName"
+              label="Last Name"
+              name="lastName"
+              value={this.state.lastName}
+              onChange={this.onChange}
+            />
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              type="email"
+              id="email"
+              label="Email"
+              name="email"
+              autoComplete="email"
+              value={this.state.email}
+              onChange={this.onChange}
+            />
+
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              name="password"
+              label="Password"
+              type="password"
+              id="password"
+              helperText="Must be 5 or more characters."
+              value={this.state.password}
+              onChange={this.onChange}
+            /> 
+
             <Button
-              block
-              variant={!this.validateForm() ? "dark" : "primary"}
-              // disabled={!this.validateForm()}
+              style={{ margin: "24px 0 16px"}}
               type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
             >
-              Register
+              {this.state.registerSuccess ? (
+                <Box display="flex" alignItems="center">
+                  <div>Register success! redirecting...</div>
+                  <Box display="flex" alignItems="center">
+                  <CircularProgress style={{ color: "white",marginLeft:'10px' }} size={30} />
+                  </Box>
+                </Box>
+              ) : (
+                "Register"
+              )}
             </Button>
-          </Form>
+
+            {this.state.formError && (
+              <FormHelperText error={true}>
+                Please check the information provided
+              </FormHelperText>
+            )}
+          </form>
         </div>
       </Container>
     );

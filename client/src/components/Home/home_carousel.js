@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import Carousel from "react-bootstrap/Carousel";
-import { Link } from "react-router-dom";
-
+import { Link } from "react-router-dom"; 
+import Button from "@material-ui/core/Button";
+import { Carousel } from "react-responsive-carousel";
 class HomeCarousel extends Component {
   state = {
     index: 0,
@@ -15,55 +15,72 @@ class HomeCarousel extends Component {
 
   render() {
     return (
-      <section className="home-slider">
-        <Carousel
-          onSelect={this.handleSelect}
-          activeIndex={this.state.index}
-          interval={3000}
-        >
-          <Carousel.Item>
-            <img
-              className="d-block w-100"
-              src="/images/featured/bg-home-1.jpg"
-              alt="First slide"
-            />
-            <Carousel.Caption>
-              <h3 className="mb-4">First photo</h3>
-              <Link to="/shop" className="btn btn-primary mb-4">
-                Shop
-              </Link>
-            </Carousel.Caption>
-          </Carousel.Item>
-
-          <Carousel.Item>
-            <img
-              className="d-block w-100"
-              src="/images/featured/bg-home-2.jpg"
-              alt="Second slide"
-            />
-            <Carousel.Caption>
-              <h3 className="mb-4">Second photo</h3>{" "}
-              <Link to="/shop" className="btn btn-primary mb-4">
-                Shop
-              </Link>
-            </Carousel.Caption>
-          </Carousel.Item>
-
-          <Carousel.Item>
-            <img
-              className="d-block w-100"
-              src="/images/featured/bg-home-3.jpg"
-              alt="Third slide"
-            />
-            <Carousel.Caption>
-              <h3 className="mb-4">Third photo</h3>
-              <Link to="/shop" className="btn btn-primary mb-4">
-                Shop
-              </Link>
-            </Carousel.Caption>
-          </Carousel.Item>
-        </Carousel>
-      </section>
+      <Carousel
+        showThumbs={false}
+        // autoPlay
+        showStatus={false}
+      >
+        <div>
+          <img src="/images/featured/bg-home-1.jpg" alt="slide 1" />
+          <Button
+            variant="contained"
+            style={{
+              width: "16%",
+              left: "87%",
+              position: "absolute",
+              bottom: "40px",
+              marginLeft: "-45%",
+              // background: "#000",
+              // padding: "0 5px",
+              fontSize: "1rem",
+            }}
+            component={Link}
+            to="/shop"
+          >
+            Shop
+          </Button>
+        </div>
+        <div>
+          <img src="/images/featured/bg-home-2.jpg" alt="slide 2" />
+          <Button
+            variant="contained"
+            style={{
+              width: "16%",
+              left: "87%",
+              position: "absolute",
+              bottom: "40px",
+              marginLeft: "-45%",
+              // background: "#000",
+              // padding: "5px",
+              fontSize: "1rem",
+            }}
+            component={Link}
+            to="/shop"
+          >
+            Shop
+          </Button>
+        </div>
+        <div>
+          <img src="/images/featured/bg-home-3.jpg" alt="slide 3" />
+          <Button
+            variant="contained"
+            style={{
+              width: "16%",
+              left: "87%",
+              position: "absolute",
+              bottom: "40px",
+              marginLeft: "-45%",
+              // background: "#000",
+              // padding: "5px",
+              fontSize: "1rem",
+            }}
+            component={Link}
+            to="/shop"
+          >
+            Shop
+          </Button>
+        </div>
+      </Carousel>
     );
   }
 }

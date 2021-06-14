@@ -4,19 +4,17 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import { connect } from "react-redux";
 import {
   getProductDetail,
-  clearProductDetail
+  clearProductDetail,
 } from "../../actions/product_actions";
-
 import { addToCart } from "../../actions/user_actions";
-
 import ProdNfo from "./prodNfo";
 import ProdImg from "./prod_img";
-import Container from "react-bootstrap/Container";
+import Container from "@material-ui/core/Container";
 
 class ProductPage extends Component {
   componentDidMount() {
     const id = this.props.match.params.id;
-    this.props.dispatch(getProductDetail(id)).then(response => {
+    this.props.dispatch(getProductDetail(id)).then((response) => {
       if (response.payload === "") this.props.history.push("/");
     });
   }
@@ -25,15 +23,15 @@ class ProductPage extends Component {
     this.props.dispatch(clearProductDetail());
   }
 
-  modifiedImageToPass = images => {
+  modifiedImageToPass = (images) => {
     let lightboxImages = [];
-    images.forEach(item => {
+    images.forEach((item) => {
       lightboxImages.push(item.url);
     });
     return lightboxImages;
   };
 
-  addToCartHandler = id => {
+  addToCartHandler = (id) => {
     this.props.dispatch(addToCart(id));
   };
 
@@ -53,14 +51,14 @@ class ProductPage extends Component {
               </div>
               <div className="col-sm-6 text-center text-sm-left pt-4">
                 <ProdNfo
-                  addToCart={id => this.addToCartHandler(id)}
+                  addToCart={(id) => this.addToCartHandler(id)}
                   detail={this.props.products.prodDetail}
                 />
               </div>
             </div>
           ) : (
             <div style={{ textAlign: "center", paddingTop: "10px" }}>
-              <CircularProgress style={{ color: "#00bcd4" }} thikness={7} />
+              <CircularProgress  />
             </div>
           )}
         </Container>
@@ -69,9 +67,9 @@ class ProductPage extends Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    products: state.products
+    products: state.products,
   };
 };
 

@@ -15,8 +15,7 @@ import { prices } from "../utils/Form/fixed_categories";
 import LoadMoreCards from "./loadMoreCards";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faTh } from "@fortawesome/free-solid-svg-icons";
-import Container from "react-bootstrap/Container";
-
+import Container from '@material-ui/core/Container'
 class Shop extends Component {
   state = {
     grid: "",

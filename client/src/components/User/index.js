@@ -1,21 +1,42 @@
 import React from "react";
 import UserLayout from "../../hoc/user";
 import { Link } from "react-router-dom";
+import Card from "@material-ui/core/Card";
+import CardActions from "@material-ui/core/CardActions";
+import CardContent from "@material-ui/core/CardContent";
+import Button from "@material-ui/core/Button";
+import Typography from "@material-ui/core/Typography";
 
 const UserDashboard = ({ user }) => {
   return (
     <UserLayout>
-      <div className="user_nfo_panel text-center">
-        <h2>Personal Information</h2>
-        <div>
-          <span>Name: {user.userData.name}</span>
-          <span>Last Name: {user.userData.lastname}</span>
-          <span>Email: {user.userData.email}</span>
-        </div>        
-        <Link to="/user/user_profile" className="btn btn-primary mt-2">
-          Edit
-        </Link>
-      </div>
+      <Card style={{ padding: "1.5em" }} elevation={2}>
+        <CardContent>
+          <Typography
+            variant="h5"
+            component="h2"
+            style={{ marginBottom: "1.4em" }}
+          >
+            Personal Information
+          </Typography>
+          <Typography variant="body1" component="p">
+            Name: {user.userData.name}
+          </Typography>
+          <Typography variant="body1" component="p">
+            Last Name: {user.userData.lastname}
+          </Typography>
+          <Typography variant="body1" component="p">
+            Email: {user.userData.email}
+          </Typography>
+        </CardContent>
+        <CardActions>
+          <Button size="small">
+            <Link to="/user/user_profile" className="btn btn-primary mt-2">
+              Edit
+            </Link>
+          </Button>
+        </CardActions>
+      </Card>
     </UserLayout>
   );
 };

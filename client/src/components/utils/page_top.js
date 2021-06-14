@@ -1,7 +1,6 @@
 import React from "react";
-import Container from "react-bootstrap/Container";
-
-const PageTop = props => {
+import Container from "@material-ui/core/Container";
+const PageTop = (props) => {
   return (
     <div className="page_top">
       <Container>{props.title}</Container>

@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { auth } from "../actions/user_actions";
-import Spinner from 'react-bootstrap/Spinner'
-
+import CircularProgress from "@material-ui/core/CircularProgress";
 // composedclass is the componet that we will render if //everything is ok
  function authHoc(ComposedClass, reload, adminRoute = null) {
   class AuthenticationCheck extends Component {
@@ -41,7 +40,7 @@ import Spinner from 'react-bootstrap/Spinner'
       // return true ? (
       return this.state.loading ? (
         <div className="main_loader">          
-          <Spinner animation="border" />          
+          <CircularProgress />         
         </div>
       ) : (
         <ComposedClass {...this.props} user={this.props.user} />

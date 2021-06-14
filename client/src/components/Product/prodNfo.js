@@ -3,14 +3,18 @@ import MyButton from "../utils/button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTruck, faCheck, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { connect } from "react-redux";
-import Modal from "react-bootstrap/Modal";
-
+import Dialog from "@material-ui/core/Dialog";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogActions from "@material-ui/core/DialogActions";
+import Typography from "@material-ui/core/Typography";
+import Button from "@material-ui/core/Button";
 class ProdNfo extends React.Component {
   state = {
-    showModal: false
+    showModal: false,
   };
 
-  showProdTags = detail => (
+  showProdTags = (detail) => (
     <div className="product_tags">
       {detail.shipping ? (
         <div className="tag">
@@ -47,7 +51,7 @@ class ProdNfo extends React.Component {
     </div>
   );
 
-  showProdActions = detail => (
+  showProdActions = (detail) => (
     <div className="product_actions">
       <div className="price">$ {detail.price}</div>
       <div className="cart">
@@ -59,25 +63,34 @@ class ProdNfo extends React.Component {
               : this.setState({ showModal: true });
           }}
         />
-        <Modal
-          size="sm"
-          show={this.state.showModal}
-          onHide={() => this.setState({ showModal: false })}
-          aria-labelledby="example-modal-sizes-title-sm"
+        <Dialog
+          onClose={() => this.setState({ showModal: false })}
+          aria-labelledby="simple-dialog-title"
+          open={this.state.showModal}
         >
-          <Modal.Header closeButton>
-            <Modal.Title id="example-modal-sizes-title-sm">Warning</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>You must be logged in to add items.</Modal.Body>
-        </Modal>
+          <DialogTitle id="simple-dialog-title">Warning</DialogTitle>
+          <DialogContent>
+            <Typography gutterBottom>
+              You must be logged in to add items.
+            </Typography>
+          </DialogContent>
+          <DialogActions>
+            <Button
+              color="primary"
+              onClick={() => this.setState({ showModal: false })}
+            >
+              Ok
+            </Button>
+          </DialogActions>
+        </Dialog>
       </div>
     </div>
   );
 
-  showProdSpecifications = detail => (
+  showProdSpecifications = (detail) => (
     <div className="product_specifications">
       <h2>Specs:</h2>
-      <div>     
+      <div>
         <div className="item">
           <strong>Category: </strong>
           {detail.category.name}
@@ -103,9 +116,9 @@ class ProdNfo extends React.Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    user: state.user
+    user: state.user,
   };
 };
 

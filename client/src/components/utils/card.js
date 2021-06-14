@@ -2,15 +2,19 @@ import React, { Component } from "react";
 import MyButton from "./button";
 import { connect } from "react-redux";
 import { addToCart } from "../../actions/user_actions";
-import Modal from 'react-bootstrap/Modal';
+import Dialog from "@material-ui/core/Dialog";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogActions from "@material-ui/core/DialogActions";
+import Typography from "@material-ui/core/Typography";
+import Button from "@material-ui/core/Button";
 
 class Card extends Component {
+  state = {
+    showModal: false,
+  };
 
-  state={
-    showModal: false
-  }
-
-  renderCardImage = images => {
+  renderCardImage = (images) => {
     if (images.length > 0) {
       return images[0].url;
     } else {
@@ -25,7 +29,7 @@ class Card extends Component {
         <div
           className="image"
           style={{
-            background: `url(${this.renderCardImage(props.images)}) no-repeat`
+            background: `url(${this.renderCardImage(props.images)}) no-repeat`,
           }}
         ></div>
         <div className="action_container">
@@ -48,7 +52,7 @@ class Card extends Component {
                 title="View product"
                 linkTo={`/product_detail/${props._id}`}
                 addStyle={{
-                  margin: "10px 0 0 0"
+                  margin: "10px 0 0 0",
                 }}
               />
             </div>
@@ -58,30 +62,35 @@ class Card extends Component {
                 runAction={() => {
                   props.user.userData.isAuth
                     ? this.props.dispatch(addToCart(props._id))
-                    : this.setState({showModal:true});
+                    : this.setState({ showModal: true });
                 }}
                 altClass="card_link"
                 title="View product"
                 linkTo={`/product_detail/${props._id}`}
                 addStyle={{
-                  margin: "10px 0 0 0"
+                  margin: "10px 0 0 0",
                 }}
               />
-
-              <Modal
-                size="sm"
-                show={this.state.showModal}
-                onHide={() => this.setState({showModal:false})}
-                aria-labelledby="example-modal-sizes-title-sm"
+              <Dialog
+                onClose={() => this.setState({ showModal: false })}
+                aria-labelledby="simple-dialog-title"
+                open={this.state.showModal}
               >
-                <Modal.Header closeButton>
-                  <Modal.Title id="example-modal-sizes-title-sm">
-                    Warning
-                  </Modal.Title>
-                </Modal.Header>
-                <Modal.Body>You must be logged in to add items.</Modal.Body>
-              </Modal>
-
+                <DialogTitle id="simple-dialog-title">Warning</DialogTitle>
+                <DialogContent>
+                  <Typography gutterBottom>
+                    You must be logged in to add items.
+                  </Typography>
+                </DialogContent>
+                <DialogActions>
+                  <Button
+                    color="primary"
+                    onClick={() => this.setState({ showModal: false })}
+                  >
+                    Ok
+                  </Button>
+                </DialogActions>
+              </Dialog>
             </div>
           </div>
         </div>
@@ -89,9 +98,9 @@ class Card extends Component {
     );
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    user: state.user
+    user: state.user,
   };
 };
 

@@ -1,74 +1,119 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-
-
-const generalLinks = [  
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
+import Paper from "@material-ui/core/Paper";
+import ListSubheader from "@material-ui/core/ListSubheader";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import ListItemText from "@material-ui/core/ListItemText";
+import { Link as RouterLink } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faPhone,
+  faList,
+  faPlus,
+  faInfo,
+  faShoppingCart,
+} from "@fortawesome/free-solid-svg-icons";
+const generalLinks = [
   {
-    name: "User info",
-    linkTo: "/user/user_profile"
+    name: "User Profile",
+    linkTo: "/user/user_profile",
+    icon: <FontAwesomeIcon icon={faPhone} className="icon" />,
   },
   {
     name: "My Cart",
-    linkTo: "/user/cart"
-  }
+    linkTo: "/user/cart",
+    icon: <FontAwesomeIcon icon={faShoppingCart} className="icon" />,
+  },
 ];
 
 const adminLinks = [
   {
+    name: "Add Product",
+    linkTo: "/admin/add_product",
+    icon: <FontAwesomeIcon icon={faPlus} className="icon" />,
+  },
+  {
+    name: "Add Categories",
+    linkTo: "/admin/manage_categories",
+    icon: <FontAwesomeIcon icon={faList} className="icon" />,
+  },
+  {
     name: "Site info",
-    linkTo: "/admin/site_info"
+    linkTo: "/admin/site_info",
+    icon: <FontAwesomeIcon icon={faInfo} className="icon" />,
   },
-  {
-    name: "Add product",
-    linkTo: "/admin/add_product"
-  },
-  {
-    name: "Categories",
-    linkTo: "/admin/manage_categories"
-  }
 ];
 
-const UserLayout = props => {
-  const generateLinks = links =>
-    links.map((item, i) => (
-      <Link className="btn btn-secondary" to={item.linkTo} key={i}>
-        {item.name}
-      </Link>
-    ));
+function ListItemLink(props) {
+  const { icon, primary, to } = props;
+
+  const renderLink = React.useMemo(
+    () =>
+      React.forwardRef((itemProps, ref) => (
+        <RouterLink to={to} ref={ref} {...itemProps} />
+      )),
+    [to]
+  );
 
   return (
-    
-    <div className='container'>
+    <li>
+      <ListItem button component={renderLink}>
+        {icon ? <ListItemIcon>{icon}</ListItemIcon> : null}
+        <ListItemText primary={primary} />
+      </ListItem>
+    </li>
+  );
+}
+
+const UserLayout = (props) => {
+  return (
+    <div className="container">
       <div className="user_container row">
-       
-          <div className="user_left_nav text-center col-sm-3">
-            <h2>My account</h2>
-            <div className="btn-group-vertical w-100">
-              {generateLinks(generalLinks)}
-            </div>            
-            {
-              props.user.userData.isAdmin ? (
-                <div className='pt-3'>
-                  <h2>Admin</h2>
-                  <div className="btn-group-vertical w-100">
-                    {generateLinks(adminLinks)}
-                  </div>                  
-                </div>
-              ) : null
-            }
-          </div>
-          <div className="user_right col-sm-9">{props.children}</div>
-       
+        <div className="col-sm-4 col-md-3">
+          <Paper elevation={2}>
+            <List
+              component="nav"
+              subheader={
+                <ListSubheader component="div" id="nested-list-subheader">
+                  Menu
+                </ListSubheader>
+              }
+            >
+              {generalLinks.map((item, i) => {
+                return (
+                  <ListItemLink
+                    key={i}
+                    to={item.linkTo}
+                    primary={item.name}
+                    icon={item.icon}
+                  />
+                );
+              })}
+              {props.user.userData.isAdmin &&
+                adminLinks.map((item, i) => {
+                  return (
+                    <ListItemLink
+                      key={i}
+                      to={item.linkTo}
+                      primary={item.name}
+                      icon={item.icon}
+                    />
+                  );
+                })}
+            </List>
+          </Paper>
+        </div>
+        <div className="col-sm-8 col-md-9">{props.children}</div>
       </div>
-    </div>      
-    
+    </div>
   );
 };
 
-const mapStateTopProps = state => {
+const mapStateTopProps = (state) => {
   return {
-    user: state.user
+    user: state.user,
   };
 };
 

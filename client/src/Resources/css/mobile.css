@@ -7,9 +7,9 @@ html {
     font-size: 1rem;
   }
  
-  .card_block_shop .card_item_wrapper {
+  /* .card_block_shop .card_item_wrapper {
     width: auto;    
- }
+ } */
   
 }
 @media (max-width: 576px) {
@@ -55,6 +55,6 @@ html {
     font-size: 1.2rem;
   }
   .card_block_shop .card_item_wrapper {
-    flex-grow: 1;
+    flex-grow: 0;
  } 
 }

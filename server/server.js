@@ -6,6 +6,7 @@ const formidable = require("express-formidable");
 const cloudinary = require("cloudinary");
 const path = require("path");
 const app = express();
+const helmet = require("helmet");
 const connectDB = require("./config/db");
 dotenv.config();
 
@@ -24,6 +25,8 @@ const { admin } = require("./middleware/admin");
 app.use(express.json({ extended: false }));
 app.use(cookieParser());
 app.use(express.static("client/build"));
+app.use(helmet());
+
 
 cloudinary.config({
   cloud_name: process.env.CLOUD_NAME,

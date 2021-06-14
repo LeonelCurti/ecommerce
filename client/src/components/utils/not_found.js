@@ -1,8 +1,7 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faExclamationCircle } from "@fortawesome/free-solid-svg-icons";
-import Container from "react-bootstrap/Container";
-
+import Container from '@material-ui/core/Container'
 const NotFound = () => {
   return (
     <Container>

@@ -1,7 +1,6 @@
 import React from "react";
 import Card from "./card";
-import Container from "react-bootstrap/Container";
-
+import Container from '@material-ui/core/Container'
 const CardBlock = props => {
   const renderCards = () =>
     props.list ? props.list.map((card, i) => <Card key={i} {...card} />) : null;

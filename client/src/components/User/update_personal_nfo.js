@@ -1,12 +1,11 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { updateUserData, clearUpdateUser } from "../../actions/user_actions";
-
-import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
-import Container from "react-bootstrap/Container";
-import Alert from "react-bootstrap/Alert";
-
+import Button from "@material-ui/core/Button";
+import Container from "@material-ui/core/Container";
+import Typography from "@material-ui/core/Typography";
+import TextField from "@material-ui/core/TextField";
+import FormHelperText from "@material-ui/core/FormHelperText";
 class UpdatePersonalNfo extends Component {
   state = {
     name: "",
@@ -14,12 +13,12 @@ class UpdatePersonalNfo extends Component {
     email: "",
     formError: false,
     updateSuccess: false,
-    errorMsg: ""
+    errorMsg: "",
   };
 
-  onChange = e => {
+  onChange = (e) => {
     this.setState({
-      [e.target.id]: e.target.value
+      [e.target.id]: e.target.value,
     });
   };
 
@@ -31,13 +30,13 @@ class UpdatePersonalNfo extends Component {
     );
   }
 
-  submitForm = event => {
+  submitForm = (event) => {
     event.preventDefault();
 
     const dataToSubmit = {
       name: this.state.name.trim(),
       lastname: this.state.lastName.trim(),
-      email: this.state.email.trim()
+      email: this.state.email.trim(),
     };
 
     //validate data
@@ -49,17 +48,17 @@ class UpdatePersonalNfo extends Component {
     //submit data with dispatch updateUserData
 
     if (nameExist && lastNameExist && emailExist && emailIsValid) {
-      this.props.dispatch(updateUserData(dataToSubmit)).then(response => {
+      this.props.dispatch(updateUserData(dataToSubmit)).then((response) => {
         if (this.props.user.updateUser.success) {
           this.setState(
             {
-              updateSuccess: true
+              updateSuccess: true,
             },
             () => {
               setTimeout(() => {
                 this.props.dispatch(clearUpdateUser());
                 this.setState({
-                  updateSuccess: false
+                  updateSuccess: false,
                 });
               }, 2000);
             }
@@ -69,12 +68,12 @@ class UpdatePersonalNfo extends Component {
     } else {
       this.setState({
         formError: true,
-        errorMsg: "Please check the information and try again"
+        errorMsg: "Please check the information and try again",
       });
       setTimeout(() => {
         this.setState({
           formError: false,
-          errMsg: ""
+          errMsg: "",
         });
       }, 5000);
     }
@@ -86,75 +85,77 @@ class UpdatePersonalNfo extends Component {
     this.setState({
       name,
       email,
-      lastName: lastname
+      lastName: lastname,
     });
   }
 
   render() {
     return (
-      <Container>
-        <Form
-          style={{
-            margin: "0 auto",
-            maxWidth: "320px"          
-          }}
-          onSubmit={this.submitForm}
-        >
-          <div className='user_block_info'>
-            <h3 className="text-center">User information</h3>
-            <h5>Edit personal data:</h5>
-          </div>
-          <Form.Group controlId="name">
-            <Form.Label>Name</Form.Label>
-            <Form.Control              
-              required
-              type="text"
-              value={this.state.name}
-              onChange={this.onChange}
-            />
-          </Form.Group>
-          <Form.Group controlId="lastName">
-            <Form.Label>Last Name</Form.Label>
-            <Form.Control
-              required
-              type="text"
-              value={this.state.lastName}
-              onChange={this.onChange}
-            />
-          </Form.Group>
-          <Form.Group controlId="email">
-            <Form.Label>Email</Form.Label>
-            <Form.Control
-              required
-              type="email"
-              value={this.state.email}
-              onChange={this.onChange}
-            />
-          </Form.Group>
-          {this.state.updateSuccess && (
-            <Alert variant="success">
-              <span>Successful update</span>
-            </Alert>
-          )}
-          {this.state.formError && (
-            <Alert variant="danger">{this.state.errorMsg}</Alert>
-          )}
+      <Container maxWidth="sm">
+        <Typography component="h1" variant="h5" align="center">
+          User Profile
+        </Typography>
+        <form onSubmit={this.submitForm} style={{ marginTop: "1.2rem" }}>
+          <TextField
+            variant="outlined"
+            type="text"
+            margin="normal"
+            required
+            fullWidth
+            id="name"
+            label="Name"
+            name="name"
+            autoComplete="name"
+            value={this.state.name}
+            onChange={this.onChange}
+          />
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            id="lastName"
+            label="Last Name"
+            name="lastName"
+            value={this.state.lastName}
+            onChange={this.onChange}
+          />
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            type="email"
+            id="email"
+            label="Email"
+            name="email"
+            autoComplete="email"
+            value={this.state.email}
+            onChange={this.onChange}
+          />
           <Button
-            block
-            variant={!this.validateForm() ? "dark" : "primary"}
+            style={{ margin: "24px 0 16px" }}
+            fullWidth
+            variant="contained"
+            color="primary"
+            disabled={!this.validateForm()}
             type="submit"
           >
-            Update
+            {this.state.updateSuccess ? "Edit Success!!" : "Edit"}
           </Button>
-        </Form>
+
+          {this.state.formError && (
+            <FormHelperText error={true}>{this.state.errorMsg}</FormHelperText>
+          )}
+        </form>
       </Container>
     );
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    user: state.user
+    user: state.user,
   };
 };
 

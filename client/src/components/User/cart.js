@@ -1,12 +1,19 @@
 import React, { Component } from "react";
 import UserLayout from "../../hoc/user";
-import Card from "react-bootstrap/Card";
-import Table from "react-bootstrap/Table";
 import { connect } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFrown } from "@fortawesome/free-solid-svg-icons";
+import { faFrown, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import { getCartItems, removeCartItem } from "../../actions/user_actions";
-import Spinner from "react-bootstrap/Spinner";
+import Table from "@material-ui/core/Table";
+import TableBody from "@material-ui/core/TableBody";
+import TableCell from "@material-ui/core/TableCell";
+import TableContainer from "@material-ui/core/TableContainer";
+import TableHead from "@material-ui/core/TableHead";
+import TableRow from "@material-ui/core/TableRow";
+import Paper from "@material-ui/core/Paper";
+import Toolbar from "@material-ui/core/Toolbar";
+import Typography from "@material-ui/core/Typography";
+import IconButton from "@material-ui/core/IconButton";
 class Cart extends Component {
   state = {
     loading: true,
@@ -24,14 +31,6 @@ class Cart extends Component {
         user.userData.cart.forEach((item) => {
           cartItems.push(item.id);
         });
-
-        /*
-        cartItem
-        ['3h4534ghj5345','3f45sdf3453']
-        userData.cart
-        [{id:'45454', quantity:8, date:345345}]
-
-        */
         this.props
           .dispatch(getCartItems(cartItems, user.userData.cart))
           .then(() => {
@@ -70,60 +69,71 @@ class Cart extends Component {
     const cartDetail = this.props.user.cartDetail;
     return (
       <UserLayout>
-        <div>
-          <div>
-            <Card.Header>
-              <Card.Title as="h5">My Cart</Card.Title>
-              {cartDetail ? (
-                cartDetail.length > 0 ? (
-                  <div>
-                    <Table striped={false} responsive>
-                      <thead>
-                        <tr>
-                          <th>Qty</th>
-                          <th>Product</th>
-                          <th>Price</th>
-                          <th></th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {cartDetail.map((i) => (
-                          <tr>
-                            <td>{i.quantity}</td>
-                            <td>{i.price}</td>
-                            <td>
-                              {i.brand.name} {i.name}
-                            </td>
-                            <td>
-                              <button
-                                className="btn btn-danger"
-                                onClick={() => this.removeFromCart(i._id)}
-                              >
-                                X
-                              </button>
-                            </td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </Table>
-                    <div className="user_cart_sum ">
-                      <div>Total amount: $ {this.state.total}</div>
-                    </div>
-                  </div>
-                ) : (
-                  <div className="cart_no_items mt-3">
-                    <FontAwesomeIcon icon={faFrown} />
-                    <div>You have no items</div>
-                  </div>
-                )
-              ) : (
-                <div className="main_loader">
-                  <Spinner animation="border" />
-                </div>
-              )}
-            </Card.Header>
+        {cartDetail ? (
+          cartDetail.length > 0 ? (
+            <Paper elevation={2}>
+              <Toolbar>
+                <Typography
+                  style={{ flexGrow: 1 }}
+                  // className={classes.title}
+                  variant="h5"
+                  id="tableTitle"
+                >
+                  My Cart
+                </Typography>
+                <Typography
+                  // className={classes.title}
+                  variant="subtitle2"
+                  id="tableTitle"
+                >
+                  Total amount: $ {this.state.total}
+                </Typography>
+              </Toolbar>
+              <TableContainer>
+                <Table>
+                  <TableHead>
+                    <TableRow>
+                      <TableCell align="right">Qty</TableCell>
+                      <TableCell>Product</TableCell>
+                      <TableCell align="right">Price</TableCell>
+                      <TableCell align="right"></TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {cartDetail.map((i) => (
+                      <TableRow key={i._id}>
+                        <TableCell align="right">{i.quantity}</TableCell>
+                        <TableCell>
+                          {i.brand.name} {i.name}
+                        </TableCell>
+                        <TableCell align="right">{i.price}</TableCell>
+                        <TableCell align="right">
+                          <IconButton
+                            size="small"
+                            aria-label="delete"
+                            onClick={() => this.removeFromCart(i._id)}
+                          >
+                            <FontAwesomeIcon icon={faTrashAlt} />
+                          </IconButton>
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+            </Paper>
+          ) : (
+            <div className="cart_no_items mt-3">
+              <FontAwesomeIcon icon={faFrown} />
+              <div>You have no items</div>
+            </div>
+          )
+        ) : (
+          <div className="cart_no_items mt-3">
+            <FontAwesomeIcon icon={faFrown} />
+            <div>You have no items</div>
           </div>
-        </div>
+        )}
       </UserLayout>
     );
   }
