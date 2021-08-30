@@ -1,22 +1,19 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {  
-  faPhone,  
+import {
+  faPhone,
   faMapMarkerAlt,
-  faClock
+  faClock,
 } from "@fortawesome/free-solid-svg-icons";
-
 
 const Footer = () => {
   return (
     <footer className="bg-dark" id="contact">
-
       <div className="container">
-
         <div className="row justify-content-center">
           <div className="col-md-8">
             <div className="text-center">
-              <h3 className="section-title text-white pt-3">Contact</h3>
+              <h3 className="section-title text-white pt-2">Contact</h3>
             </div>
           </div>
         </div>
@@ -37,7 +34,7 @@ const Footer = () => {
                   <h4>Address</h4>
                   <p>Medreva 819</p>
                 </div>
-              </div>              
+              </div>
               <div className="col-sm-4">
                 <div className="single-contact text-center text-white">
                   <FontAwesomeIcon icon={faClock} className="icon" />
@@ -45,8 +42,6 @@ const Footer = () => {
                   <p>10-13 14-19</p>
                 </div>
               </div>
-
-
             </div>
           </div>
         </div>
@@ -56,15 +51,13 @@ const Footer = () => {
             <div className="text-white footer-wrapper">
               <div className="text-center">
                 <p className="copyright pb-0">
-                  2020 © Black Hawk. Developed by{" "}
+                  2021 © Black Hawk. Developed by{" "}
                   <a href="https://www.twitter.com/leomcurti">Leonel</a>
                 </p>
               </div>
             </div>
           </div>
         </div>
-
-        
       </div>
     </footer>
   );

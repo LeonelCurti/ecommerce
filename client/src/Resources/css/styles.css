@@ -825,16 +825,16 @@ select {
 ==============================*/
 
 footer {
-  font-size: 1rem;
+  font-size: 0.8rem;
 }
 .title-icon {
   color: #6362b8;
-  font-size: 0.8rem;
+  font-size: 0.5rem;
 }
 
 .single-contact {
   text-align: center;
-  padding: 15px 30px;
+  /* padding: 15px 30px; */
 }
 
 .single-contact h4 {
