@@ -7,6 +7,7 @@ const cloudinary = require("cloudinary");
 const path = require("path");
 const app = express();
 const helmet = require("helmet");
+const morgan = require("morgan");
 const connectDB = require("./config/db");
 dotenv.config();
 
@@ -26,7 +27,7 @@ app.use(express.json({ extended: false }));
 app.use(cookieParser());
 app.use(express.static("client/build"));
 app.use(helmet());
-
+app.use(morgan("dev"));
 
 cloudinary.config({
   cloud_name: process.env.CLOUD_NAME,
@@ -96,13 +97,19 @@ app.get("/api/product/articles_by_id", (req, res) => {
 app.post("/api/product/article", auth, admin, (req, res) => {
   const product = new Product(req.body);
 
-  product.save((err, doc) => {
-    if (err) return res.json({ success: false, err });
-    res.status(200).json({
-      success: true,
-      product: doc,
+
+    res.status(503).json({
+      success: false,
+      err: 'Adding products is temporarily disable',
     });
-  });
+
+  // product.save((err, doc) => {
+  //   if (err) return res.json({ success: false, err });
+  //   res.status(200).json({
+  //     success: true,
+  //     product: doc,
+  //   });
+  // });
 });
 
 //-------------------------------
